@@ -7,12 +7,34 @@ WxPusher一对一：设置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID自动启动
 */
 
 // 定义trade_no(业务编号)和key(提取API页面最下面)
-const trade_no = '';
-const key= '';
-// 一对一通知
-const WP_APP_TOKEN_ONE = '';
-const WP_APP_MAIN_UID = '';
+let trade_no = '';
+let key= '';
+if (process.env.juliang_trade_no) {		
+	trade_no = process.env.juliang_trade_no;
+}
+if (process.env.juliang_key) {		
+	key = process.env.juliang_key;
+}
+//console.log(trade_no + '\n' + key)
 
+if (trade_no == ''){
+    console.log('请先定义export juliang_trade_no=(业务编号)');
+    process.exit(0);
+}
+if (key == ''){
+    console.log('请先定义export juliang_key=(api key)');
+    process.exit(0);
+}
+
+// 一对一通知
+let WP_APP_TOKEN_ONE = '';
+let WP_APP_MAIN_UID = '';
+if (process.env.WP_APP_TOKEN_ONE) {		
+	WP_APP_TOKEN_ONE = process.env.WP_APP_TOKEN_ONE;
+}
+if (process.env.WP_APP_MAIN_UID) {		
+	WP_APP_MAIN_UID = process.env.WP_APP_MAIN_UID;
+}
 
 const fs = require('fs');
 const request = require('request');
@@ -88,6 +110,23 @@ async function addIpToWhiteList(currentIP) {
   }
 }
 
+// 获取白名单IP
+async function getwhiteip() {
+  const inputString  = `trade_no=${trade_no}&key=${key}`;
+  const sign = crypto.createHash('md5').update(inputString).digest('hex');
+  const getIpUrl = `http://v2.api.juliangip.com/dynamic/getwhiteip?trade_no=${trade_no}&sign=${sign}`;
+  const getIpResponse = await new Promise((resolve, reject) => {
+    request.get(getIpUrl, (getIpError, getIpResponse, getIpBody) => {
+        if (getIpError) {
+            reject(getIpError);
+        } else {
+            resolve({ response: getIpResponse, body: getIpBody });
+        }
+    });
+  });
+  return getIpResponse.body;
+}
+
 // 发送通知
 async function sendNotification(messageInfo) {
   const { title, message } = messageInfo;
@@ -96,18 +135,29 @@ async function sendNotification(messageInfo) {
 
 async function main() {
   const currentIP = await getCurrentIp();
-
+  const oldip = await readSavedIp();
+  // console.log(oip);
   if (currentIP) {
-    saveIp(currentIP);
+    if (oldip.includes(currentIP) == false){
+        saveIp(currentIP);
+    } else {
+        // console.log("存储IP与当前IP一致");
+    }
 
-    resultMessage = await addIpToWhiteList(currentIP);
+    const whiteip = await getwhiteip();
+    if (whiteip.includes(currentIP) == true){
+        console.log('😎 当前IP在白名单中');
+    } else {
 
-    await sendNotification(resultMessage);
+        resultMessage = await addIpToWhiteList(currentIP);
 
-    const wxpusherResponse = await wxpusherNotify(
-      resultMessage.title,
-      resultMessage.message
-    );
+        await sendNotification(resultMessage);
+
+        const wxpusherResponse = await wxpusherNotify(
+            resultMessage.title,
+            resultMessage.message
+        );
+    }
   }
 }
 
