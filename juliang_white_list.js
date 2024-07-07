@@ -1,5 +1,7 @@
 /*
-Jejz
+new Env('巨量IP白名单');
+35 0-23 * * * juliang_white_list.js
+by:xmo
 巨量白名单自动替换
 WxPusher一对一：设置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID自动启动
 */
