@@ -1,6 +1,6 @@
 """
 new Env('携趣IP白名单');
-0 8 * * * xiequ_white_list.py
+35 0-23 * * * xiequ_white_list.py
 export XIEQU_UID='xxxxxx'
 export XIEQU_UKEY='xxxxxxxxxxxxxxxxx'
 by:xmo
@@ -43,6 +43,8 @@ def load_send():
         send=False
         print(">>>加载通知服务失败~")
 load_send()
+
+msgn = 0
 
 print(">>>开始执行...")
 msg = ">>>开始执行..."
@@ -109,6 +111,7 @@ else:
     msg = msg + "\n" + f">>>执行前查询白名单IP：{response.text}"
     if ip in response.text:
         print(">>>当前ip在白名单内，过程终止...")
+        msgn = 1
         msg = msg + "\n" + ">>>当前ip在白名单内，过程终止..."
     else:
         # 删除所有已有的白名单 IP
@@ -133,8 +136,11 @@ msg = msg + "\n" + f">>>执行后查询白名单IP：{response.text}"
 print(">>>执行结束...")
 print("")
 print("")
-print("开始发送通知...")
-print("通知标题：携趣IP白名单")
-print("")
-msg = msg + "\n" + ">>>执行结束..." + "\n\n" + "本通知 by xmo"
-send("携趣IP白名单", msg)
+if msgn = 0:
+    print("开始发送通知...")
+    print("通知标题：携趣IP白名单")
+    print("")
+    msg = msg + "\n" + ">>>执行结束..." + "\n\n" + "本通知 by xmo"
+    send("携趣IP白名单", msg)
+else:
+    print("无需更改白名单，取消发送通知...")
