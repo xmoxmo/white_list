@@ -140,7 +140,7 @@ async function main() {
   if (currentIP) {
     const whiteip = await getwhiteip();
     if (whiteip.includes(currentIP) == true){
-        console.log('😎 当前IP在白名单中');
+        console.log('😎 当前IP在白名单中，终止执行');
     } else {
         resultMessage = await addIpToWhiteList(currentIP);
         await sendNotification(resultMessage);
