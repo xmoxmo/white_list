@@ -138,25 +138,21 @@ async function main() {
   const oldip = await readSavedIp();
   // console.log(oip);
   if (currentIP) {
-    if (oldip.includes(currentIP) == false){
-        saveIp(currentIP);
-    } else {
-        // console.log("存储IP与当前IP一致");
-    }
-
     const whiteip = await getwhiteip();
     if (whiteip.includes(currentIP) == true){
         console.log('😎 当前IP在白名单中');
     } else {
-
         resultMessage = await addIpToWhiteList(currentIP);
-
         await sendNotification(resultMessage);
-
         const wxpusherResponse = await wxpusherNotify(
             resultMessage.title,
             resultMessage.message
         );
+    }
+    if (oldip.includes(currentIP) == false){
+        saveIp(currentIP);
+    } else {
+        // console.log("存储IP与当前IP一致");
     }
   }
 }
