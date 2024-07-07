@@ -136,7 +136,7 @@ msg = msg + "\n" + f">>>执行后查询白名单IP：{response.text}"
 print(">>>执行结束...")
 print("")
 print("")
-if msgn = 0:
+if msgn == 0:
     print("开始发送通知...")
     print("通知标题：携趣IP白名单")
     print("")
