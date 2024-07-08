@@ -127,12 +127,14 @@ else:
         print(f">>>添加白名单IP：{response.text}")
         msg = msg + "\n" + f">>>添加白名单IP：{response.text}"
         time.sleep(10)
-  
-# 查询IP白名单
-get_url = f"http://op.xiequ.cn/IpWhiteList.aspx?uid={uid}&ukey={ukey}&act=get"
-response = requests.get(get_url)
-print(f">>>执行后查询白名单IP：{response.text}")
-msg = msg + "\n" + f">>>执行后查询白名单IP：{response.text}"
+
+if msgn == 0:
+    # 查询IP白名单
+    get_url = f"http://op.xiequ.cn/IpWhiteList.aspx?uid={uid}&ukey={ukey}&act=get"
+    response = requests.get(get_url)
+    print(f">>>执行后查询白名单IP：{response.text}")
+    msg = msg + "\n" + f">>>执行后查询白名单IP：{response.text}"
+
 print(">>>执行结束...")
 print("")
 print("")
