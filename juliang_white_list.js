@@ -176,7 +176,6 @@ function wxpusherNotify(text, desp, strsummary = "") {
                     uids.push(i);
             };
             let topicIds = [];
-
             //desp = `<font size="3">${desp}</font>`;
             desp = desp.replace(/[\n\r]/g, '<br>'); // 默认为html, 不支持plaintext
             desp = `<section style="width: 24rem; max-width: 100%;border:none;border-style:none;margin:2.5rem auto;" id="shifu_imi_57"
@@ -210,7 +209,6 @@ function wxpusherNotify(text, desp, strsummary = "") {
                             </section>
                         </section>
                     </section>`;
-
             const body = {
                 appToken: `${WP_APP_TOKEN_ONE}`,
                 content: `${desp}`,
