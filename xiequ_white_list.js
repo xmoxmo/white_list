@@ -141,6 +141,7 @@ async function delwhiteip() {
 
 // 发送通知
 async function sendNotification(messageInfo) {
+  console.log('')
   const { title, message } = messageInfo;
   notify.sendNotify(title, message);
 }
@@ -169,7 +170,7 @@ async function main() {
         if (oldip.includes(currentIP) == false){
             saveIp(currentIP);
         } else {
-            // console.log("存储IP与当前IP一致");
+            // console.log('存储IP与当前IP一致');
         }
     } else {
         saveIp(currentIP);
