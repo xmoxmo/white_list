@@ -154,6 +154,11 @@ async function main() {
         console.log('😎 当前IP在白名单中，终止执行');
     } else {
         resultMessage = await addIpToWhiteList(currentIP);
+        if (oldip){
+            if (whiteip.includes(oldip) == true){
+                await delwhiteip()
+            }
+        }
         await sendNotification(resultMessage);
         const wxpusherResponse = await wxpusherNotify(
             resultMessage.title,
@@ -162,7 +167,6 @@ async function main() {
     }
     if (oldip){
         if (oldip.includes(currentIP) == false){
-            delwhiteip()
             saveIp(currentIP);
         } else {
             // console.log("存储IP与当前IP一致");
