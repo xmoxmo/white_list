@@ -1,5 +1,5 @@
 /*
-new Env('巨量IP白名单');
+new Env('携趣IP白名单');
 35 0-23 * * * xiequ_white_list.js
 by:xmo
 巨量白名单自动替换
