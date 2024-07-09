@@ -157,7 +157,7 @@ async function main() {
         }
     }
     if (whiteip.includes(currentIP) == true){
-        console.log('😎 当前IP在白名单中，终止执行');
+        console.log('😎 当前IP在白名单中，终止添加');
     } else {
         resultMessage = await addIpToWhiteList(currentIP);
         await sendNotification(resultMessage);
