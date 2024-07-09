@@ -98,7 +98,7 @@ async function addIpToWhiteList(currentIP) {
     randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
     successCondition = addIpResponse.body.includes('请求成功');
     message = successCondition ? `IP地址已更新：${currentIP}` : `IP地址添加失败: ${addIpResponse.body}`;
-    title = successCondition ? "携趣白名单更换成功 ✅" : "携趣白名单更换失败 ❌"; 
+    title = successCondition ? "巨量白名单更换成功 ✅" : "巨量白名单更换失败 ❌"; 
     console.log(randomEmoji + ' 添加IP到白名单的响应:', addIpResponse.body);
     message = `IP地址已更新：${currentIP}`;
     await delay(1000);
@@ -106,7 +106,7 @@ async function addIpToWhiteList(currentIP) {
   } catch (error) {
     console.error('添加IP到白名单发生错误:', error);
     message = `'IP地址添加失败:',${error}`;
-    return { success: false, title: "携趣白名单更换失败 ❌", message };
+    return { success: false, title: "巨量白名单更换失败 ❌", message };
   }
 }
 
@@ -154,6 +154,13 @@ async function main() {
     } else {
         // console.log("存储IP与当前IP一致");
     }
+  } else {
+	  resultMessage = { success: false, title: "获取公网IP失败 ❌", message: "获取公网IP返回空信息，请检查！" };
+	  await sendNotification(resultMessage);
+      const wxpusherResponse = await wxpusherNotify(
+          resultMessage.title,
+          resultMessage.message
+      );
   }
 }
 
