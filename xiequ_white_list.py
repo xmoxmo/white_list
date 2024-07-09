@@ -114,12 +114,14 @@ else:
         msgn = 1
         msg = msg + "\n" + ">>>当前ip在白名单内，过程终止..."
     else:
-        # 删除所有已有的白名单 IP
-        time.sleep(1)
-        delete_url = f"http://op.xiequ.cn/IpWhiteList.aspx?uid={uid}&ukey={ukey}&act=del&ip=all"
-        response = requests.get(delete_url)
-        print(f">>>清空白名单IP：{response.text}")
-        msg = msg + "\n" + f">>>清空白名单IP：{response.text}"
+        ipn = response.text.split(',')
+        if len(ipn) == 5:
+            # 删除所有已有的白名单 IP
+            time.sleep(1)
+            delete_url = f"http://op.xiequ.cn/IpWhiteList.aspx?uid={uid}&ukey={ukey}&act=del&ip=all"
+            response = requests.get(delete_url)
+            print(f">>>清空白名单IP：{response.text}")
+            msg = msg + "\n" + f">>>清空白名单IP：{response.text}"
         # 添加IP到白名单
         time.sleep(1)
         add_url = f"http://op.xiequ.cn/IpWhiteList.aspx?uid={uid}&ukey={ukey}&act=add&ip={ip}"
