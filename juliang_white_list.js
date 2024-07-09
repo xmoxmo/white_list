@@ -128,6 +128,7 @@ async function getwhiteip() {
 
 // 发送通知
 async function sendNotification(messageInfo) {
+  console.log('')
   const { title, message } = messageInfo;
   notify.sendNotify(title, message);
 }
