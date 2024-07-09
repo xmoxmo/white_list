@@ -1,6 +1,6 @@
 """
 new Env('携趣IP白名单');
-35 0-23 * * * xiequ_white_list.py
+5 0-23 * * * xiequ_white_list.py
 export XIEQU_UID='xxxxxx'
 export XIEQU_UKEY='xxxxxxxxxxxxxxxxx'
 by:xmo
