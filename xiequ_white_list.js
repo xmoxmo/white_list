@@ -152,8 +152,10 @@ async function main() {
   if (currentIP) {
     const whiteip = await getwhiteip();
     if (oldip){
-        if (whiteip.includes(oldip) == true){
-            await delwhiteip(oldip);
+        if (oldip.includes(currentIP) == false){
+            if (whiteip.includes(oldip) == true){
+                await delwhiteip(oldip);
+            }
         }
     }
     if (whiteip.includes(currentIP) == true){
