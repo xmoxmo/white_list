@@ -135,7 +135,6 @@ async function sendNotification(messageInfo) {
 async function main() {
   const currentIP = await getCurrentIp();
   const oldip = await readSavedIp();
-  // console.log(oip);
   if (currentIP) {
     const whiteip = await getwhiteip();
     if (whiteip.includes(currentIP) == true){
