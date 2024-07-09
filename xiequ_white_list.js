@@ -2,7 +2,7 @@
 new Env('携趣IP白名单');
 35 0-23 * * * xiequ_white_list.js
 by:xmo
-巨量白名单自动替换
+携趣白名单自动替换
 WxPusher一对一：设置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID自动启动
 */
 
@@ -95,16 +95,16 @@ async function addIpToWhiteList(currentIP) {
     });
     emojis = ['😊', '😎', '🚀', '🎉', '👍', '💡'];
     randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-    successCondition = addIpResponse.body.includes('请求成功');
+    successCondition = addIpResponse.body.includes('success');
     message = successCondition ? `IP地址已更新：${currentIP}` : `IP地址添加失败: ${addIpResponse.body}`;
-    title = successCondition ? "巨量白名单更换成功 ✅" : "巨量白名单更换失败 ❌"; 
+    title = successCondition ? "携趣白名单更换成功 ✅" : "携趣白名单更换失败 ❌"; 
     console.log(randomEmoji + ' 添加IP到白名单的响应:', addIpResponse.body);
     await delay(1000);
     return { success: successCondition, title, message };
   } catch (error) {
     console.error('添加IP到白名单发生错误:', error);
     message = `'IP地址添加失败:',${error}`;
-    return { success: false, title: "巨量白名单更换失败 ❌", message };
+    return { success: false, title: "携趣白名单更换失败 ❌", message };
   }
 }
 
