@@ -100,7 +100,6 @@ async function addIpToWhiteList(currentIP) {
     message = successCondition ? `IP地址已更新：${currentIP}` : `IP地址添加失败: ${addIpResponse.body}`;
     title = successCondition ? "巨量白名单更换成功 ✅" : "巨量白名单更换失败 ❌"; 
     console.log(randomEmoji + ' 添加IP到白名单的响应:', addIpResponse.body);
-    message = `IP地址已更新：${currentIP}`;
     await delay(1000);
     return { success: successCondition, title, message };
   } catch (error) {
