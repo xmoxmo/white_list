@@ -124,8 +124,8 @@ async function getwhiteip() {
 }
 
 // 删除白名单IP
-async function delwhiteip() {
-  const delIpUrl = `http://op.xiequ.cn/IpWhiteList.aspx?uid=${uid}&ukey=${ukey}&act=del&ip=${readSavedIp()}`;
+async function delwhiteip(oldip) {
+  const delIpUrl = `http://op.xiequ.cn/IpWhiteList.aspx?uid=${uid}&ukey=${ukey}&act=del&ip=${oldip}`;
   const delIpResponse = await new Promise((resolve, reject) => {
     request.get(delIpUrl, (delIpError, delIpResponse, delIpBody) => {
         if (delIpError) {
@@ -151,15 +151,15 @@ async function main() {
   const oldip = await readSavedIp();
   if (currentIP) {
     const whiteip = await getwhiteip();
+    if (oldip){
+        if (whiteip.includes(oldip) == true){
+            await delwhiteip(oldip);
+        }
+    }
     if (whiteip.includes(currentIP) == true){
         console.log('😎 当前IP在白名单中，终止执行');
     } else {
         resultMessage = await addIpToWhiteList(currentIP);
-        if (oldip){
-            if (whiteip.includes(oldip) == true){
-                await delwhiteip()
-            }
-        }
         await sendNotification(resultMessage);
         const wxpusherResponse = await wxpusherNotify(
             resultMessage.title,
