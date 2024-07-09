@@ -154,6 +154,8 @@ async function main() {
         } else {
             // console.log("存储IP与当前IP一致");
         }
+    } else {
+        saveIp(currentIP);
     }
   } else {
 	  resultMessage = { success: false, title: "获取公网IP失败 ❌", message: "获取公网IP返回空信息，请检查！" };
