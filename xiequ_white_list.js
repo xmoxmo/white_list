@@ -135,7 +135,7 @@ async function delwhiteip(oldip) {
         }
     });
   });
-  console.log('💡 白名单删除失效IP的响应:', delIpResponse.body);
+  console.log('💡 白名单中删除上次IP:' + oldip + ',', delIpResponse.body);
   return delIpResponse.body;
 }
 
