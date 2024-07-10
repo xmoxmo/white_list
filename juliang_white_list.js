@@ -150,7 +150,6 @@ async function main() {
     }
     if (oldip){
         if (oldip.includes(currentIP) == false){
-            delwhiteip()
             saveIp(currentIP);
         } else {
             // console.log("存储IP与当前IP一致");
