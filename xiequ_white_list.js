@@ -70,9 +70,14 @@ async function getCurrentIp() {
     });
     emojis = ['😊', '😎', '🚀', '🎉', '👍', '💡'];
     randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-    console.log(randomEmoji + ' 当前IP:', currentIP);
-    await delay(2000);
-    return currentIP;
+    if (currentIP.indexOf(':') > 0) {
+      console.log('获取到不支持的IPV6地址：', currentIP, '，返回空信息');
+      return null;
+    } else {
+      console.log(randomEmoji + ' 当前IP:', currentIP);
+      await delay(2000);
+      return currentIP;
+    }
   } catch (error) {
     console.error('获取当前IP发生错误:', error);
     return null;
@@ -178,7 +183,7 @@ async function main() {
         saveIp(currentIP);
     }
   } else {
-	  resultMessage = { success: false, title: "携趣获取公网IP失败 ❌", message: "获取公网IP返回空信息，请检查！" };
+	  resultMessage = { success: false, title: "携趣获取公网IP失败 ❌", message: "获取公网IP返回空信息，终止执行！" };
 	  await sendNotification(resultMessage);
       const wxpusherResponse = await wxpusherNotify(
           resultMessage.title,
