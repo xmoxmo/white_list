@@ -139,7 +139,22 @@ async function sendNotification(messageInfo) {
 }
 
 async function main() {
-  const currentIP = await getCurrentIp();
+  let currentIP = await getCurrentIp();
+  if (!currentIP) {
+     console.log('💡 公网IP返回空，重试1次！');
+     await delay(1000)
+     currentIP = await getCurrentIp();
+  }
+  if (!currentIP) {
+     console.log('💡 公网IP返回空，重试2次！');
+     await delay(1000)
+     currentIP = await getCurrentIp();
+  }
+  if (!currentIP) {
+     console.log('💡 公网IP返回空，重试3次！');
+     await delay(1000)
+     currentIP = await getCurrentIp();
+  }
   const oldip = await readSavedIp();
   if (currentIP) {
     const whiteip = await getwhiteip();
