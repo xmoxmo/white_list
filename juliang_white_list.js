@@ -139,7 +139,7 @@ async function sendNotification(messageInfo) {
 }
 
 async function main() {
-  let currentIP = await getCurrentIp();
+  currentIP = await getCurrentIp();
   if (!currentIP) {
      console.log('💡 公网IP返回空，重试1次！');
      await delay(1000)
