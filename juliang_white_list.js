@@ -71,7 +71,7 @@ async function getCurrentIp() {
     emojis = ['😊', '😎', '🚀', '🎉', '👍', '💡'];
     randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
     if (currentIP.indexOf(':') > 0) {
-      console.log('获取到不支持的IPV6地址：', currentIP, '，返回空信息');
+      console.log('💡 获取到不支持的IPV6地址：', currentIP, '，返回空信息');
       return null;
     } else {
       console.log(randomEmoji + ' 当前IP:', currentIP);
@@ -79,7 +79,7 @@ async function getCurrentIp() {
       return currentIP;
     }
   } catch (error) {
-    console.error('获取当前IP发生错误:', error);
+    console.error('💡 获取当前IP发生错误:', error);
     return null;
   }
 }
@@ -108,8 +108,8 @@ async function addIpToWhiteList(currentIP) {
     await delay(1000);
     return { success: successCondition, title, message };
   } catch (error) {
-    console.error('添加IP到白名单发生错误:', error);
-    message = `'IP地址添加失败:',${error}`;
+    console.error('💡 添加IP到白名单发生错误:', error);
+    message = `'💡 IP地址添加失败:',${error}`;
     return { success: false, title: "巨量白名单更换失败 ❌", message };
   }
 }
