@@ -178,7 +178,7 @@ async function main() {
         saveIp(currentIP);
     }
   } else {
-	  resultMessage = { success: false, title: "巨量获取公网IP失败 ❌", message: "获取公网IP返回空信息，终止执行！" };
+	  resultMessage = { success: false, title: "巨量获取公网IP失败 ❌", message: "💡 获取公网IP返回空信息，终止执行！" };
 	  await sendNotification(resultMessage);
       const wxpusherResponse = await wxpusherNotify(
           resultMessage.title,
