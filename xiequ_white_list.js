@@ -101,7 +101,7 @@ async function addIpToWhiteList(currentIP) {
     emojis = ['😊', '😎', '🚀', '🎉', '👍', '💡'];
     randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
     successCondition = addIpResponse.body.includes('success');
-    message = successCondition ? `IP地址已更新：${currentIP}` : `IP地址添加失败: ${addIpResponse.body}`;
+    message = successCondition ? `🎉 IP地址已更新：${currentIP}` : `💡 IP地址添加失败: ${addIpResponse.body}`;
     title = successCondition ? "携趣白名单更换成功 ✅" : "携趣白名单更换失败 ❌"; 
     console.log(randomEmoji + ' 添加IP到白名单的响应:', addIpResponse.body);
     await delay(1000);
