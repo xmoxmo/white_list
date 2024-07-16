@@ -155,6 +155,7 @@ async function sendNotification(messageInfo) {
 }
 
 async function main() {
+  console.log('')
   let currentIP = null;
   if (!currentIP) {
     currentIP = await getCurrentIp('http://ident.me/');
