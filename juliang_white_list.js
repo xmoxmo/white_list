@@ -152,13 +152,6 @@ async function main() {
     }
   }
   if (!currentIP) {
-    console.log('💡 开始使用3322.org获取公网IP……');
-    currentIP = await getCurrentIp('http://members.3322.org/dyndns/getip/');
-    if (!currentIP) {
-      console.log('💡 使用3322.org返回公网IP返回空！');
-    }
-  }
-  if (!currentIP) {
     console.log('💡 开始使用synology.com获取公网IP……');
     currentIP = await getCurrentIp('https://checkip.synology.com/');
     if (!currentIP) {
