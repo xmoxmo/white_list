@@ -56,10 +56,10 @@ function saveIp(ip) {
 }
 
 // 获取当前IP
-async function getCurrentIp() {
-  const getIpUrl = 'http://ident.me';
+async function getCurrentIp(checkipurl) {
+  const getIpUrl = checkipurl;
   try {
-    const currentIP = await new Promise((resolve, reject) => {
+    let currentIP = await new Promise((resolve, reject) => {
       request.get(getIpUrl, (getIpError, getIpResponse, currentIP) => {
         if (getIpError) {
           reject(getIpError);
@@ -70,13 +70,16 @@ async function getCurrentIp() {
     });
     emojis = ['😊', '😎', '🚀', '🎉', '👍', '💡'];
     randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-    if (currentIP.indexOf(':') > 0) {
-      console.log('💡 获取到不支持的IPV6地址：', currentIP, '，返回空信息');
-      return null;
-    } else {
+    var reg = /((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}/g;
+    const arrcurrentIP = currentIP.match(reg);
+    if (arrcurrentIP) {
+      currentIP = arrcurrentIP[0];
       console.log(randomEmoji + ' 当前IP:', currentIP);
       await delay(2000);
       return currentIP;
+    } else {
+      console.log('💡 未获取到公网IPV4地址，返回空信息。详情：', currentIP);
+      return null;
     }
   } catch (error) {
     console.error('💡 获取当前IP发生错误:', error);
@@ -119,9 +122,9 @@ async function getwhiteip() {
   const getIpResponse = await new Promise((resolve, reject) => {
     request.get(getIpUrl, (getIpError, getIpResponse, getIpBody) => {
         if (getIpError) {
-            reject(getIpError);
+          reject(getIpError);
         } else {
-            resolve({ response: getIpResponse, body: getIpBody });
+          resolve({ response: getIpResponse, body: getIpBody });
         }
     });
   });
@@ -134,9 +137,9 @@ async function delwhiteip(oldip) {
   const delIpResponse = await new Promise((resolve, reject) => {
     request.get(delIpUrl, (delIpError, delIpResponse, delIpBody) => {
         if (delIpError) {
-            reject(delIpError);
+          reject(delIpError);
         } else {
-            resolve({ response: delIpResponse, body: delIpBody });
+          resolve({ response: delIpResponse, body: delIpBody });
         }
     });
   });
@@ -152,21 +155,30 @@ async function sendNotification(messageInfo) {
 }
 
 async function main() {
-  currentIP = await getCurrentIp();
+  let currentIP = null;
   if (!currentIP) {
-     console.log('💡 公网IP返回空，重试1次！');
-     await delay(1000)
-     currentIP = await getCurrentIp();
+    currentIP = await getCurrentIp('http://ident.me/');
+    if (!currentIP) {
+      console.log('💡 使用ident.me返回公网IP返回空！');
+    }
   }
   if (!currentIP) {
-     console.log('💡 公网IP返回空，重试2次！');
-     await delay(1000)
-     currentIP = await getCurrentIp();
+    currentIP = await getCurrentIp('http://members.3322.org/dyndns/getip/');
+    if (!currentIP) {
+      console.log('💡 使用3322.org返回公网IP返回空！');
+    }
   }
   if (!currentIP) {
-     console.log('💡 公网IP返回空，重试3次！');
-     await delay(1000)
-     currentIP = await getCurrentIp();
+    currentIP = await getCurrentIp('https://checkip.synology.com/');
+    if (!currentIP) {
+      console.log('💡 使用synology.com返回公网IP返回空！');
+    }
+  }
+  if (!currentIP) {
+    currentIP = await getCurrentIp('http://httpbin.org/ip');
+    if (!currentIP) {
+      console.log('💡 使用httpbin.org返回公网IP返回空！');
+    }
   }
   const oldip = await readSavedIp();
   if (currentIP) {
