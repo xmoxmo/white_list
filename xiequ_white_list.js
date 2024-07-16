@@ -39,7 +39,6 @@ if (process.env.WP_APP_MAIN_UID) {
 const fs = require('fs');
 const request = require('request');
 const notify = require('./sendNotify');
-const crypto = require('crypto');
 const ipFileName = 'xiequIp.txt';
 
 function readSavedIp() {
