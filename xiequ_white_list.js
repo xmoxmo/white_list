@@ -157,31 +157,31 @@ async function main() {
   console.log('')
   let currentIP = null;
   if (!currentIP) {
-    console.log('💡 开始使用ident.me获取公网IP……');
+    console.log('💡 使用ident.me获取当前IP……');
     currentIP = await getCurrentIp('http://ident.me/');
     if (!currentIP) {
-      console.log('💡 使用ident.me返回公网IP返回空！');
+      console.log('💡 使用ident.me返回当前IP为空！');
     }
   }
   if (!currentIP) {
-    console.log('💡 开始使用ip-api.com获取公网IP……');
+    console.log('💡 使用ip-api.com获取当前IP……');
     currentIP = await getCurrentIp('http://ip-api.com/json');
     if (!currentIP) {
-      console.log('💡 使用ip-api.com返回公网IP返回空！');
+      console.log('💡 使用ip-api.com返回当前IP为空！');
     }
   }
   if (!currentIP) {
-    console.log('💡 开始使用synology.com获取公网IP……');
+    console.log('💡 使用synology.com获取当前IP……');
     currentIP = await getCurrentIp('https://checkip.synology.com/');
     if (!currentIP) {
-      console.log('💡 使用synology.com返回公网IP返回空！');
+      console.log('💡 使用synology.com返回当前IP为空！');
     }
   }
   if (!currentIP) {
-    console.log('💡 开始使用httpbin.org获取公网IP……');
+    console.log('💡 使用httpbin.org获取当前IP……');
     currentIP = await getCurrentIp('http://httpbin.org/ip');
     if (!currentIP) {
-      console.log('💡 使用httpbin.org返回公网IP返回空！');
+      console.log('💡 使用httpbin.org返回当前IP为空！');
     }
   }
   const oldip = await readSavedIp();
