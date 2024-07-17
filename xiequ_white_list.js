@@ -17,11 +17,11 @@ if (process.env.XIEQU_UKEY) {
 }
 //console.log(uid + '\n' + ukey)
 
-if (uid == ''){
+if (uid == '') {
   console.log('请先定义export XIEQU_UID=(UID)');
   process.exit(0);
 }
-if (ukey == ''){
+if (ukey == '') {
   console.log('请先定义export XIEQU_UKEY=(UKEY)');
   process.exit(0);
 }
@@ -188,14 +188,14 @@ async function main() {
   const oldip = await readSavedIp();
   if (currentIP) {
     const whiteip = await getwhiteip();
-    if (oldip){
-      if (oldip.includes(currentIP) == false){
-        if (whiteip.includes(oldip) == true){
+    if (oldip) {
+      if (oldip.includes(currentIP) == false) {
+        if (whiteip.includes(oldip) == true) {
           await delwhiteip(oldip);
         }
       }
     }
-    if (whiteip.includes(currentIP) == true){
+    if (whiteip.includes(currentIP) == true) {
       console.log('😎 当前IP在白名单中，终止添加');
     } else {
       console.log('💡 当前IP不在白名单响应中，尝试添加');
@@ -207,7 +207,7 @@ async function main() {
       );
     }
     if (oldip){
-      if (oldip.includes(currentIP) == false){
+      if (oldip.includes(currentIP) == false) {
         saveIp(currentIP);
       } else {
         // console.log('存储IP与当前IP一致');
