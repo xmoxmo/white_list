@@ -17,13 +17,13 @@ if (process.env.juliang_key) {
 }
 //console.log(trade_no + '\n' + key)
 
-if (trade_no == ''){
-    console.log('请先定义export juliang_trade_no=(业务编号)');
-    process.exit(0);
+if (trade_no == '') {
+  console.log('请先定义export juliang_trade_no=(业务编号)');
+  process.exit(0);
 }
-if (key == ''){
-    console.log('请先定义export juliang_key=(api key)');
-    process.exit(0);
+if (key == '') {
+  console.log('请先定义export juliang_key=(api key)');
+  process.exit(0);
 }
 
 // 一对一通知
@@ -124,11 +124,11 @@ async function getwhiteip() {
   const getIpUrl = `http://v2.api.juliangip.com/dynamic/getwhiteip?trade_no=${trade_no}&sign=${sign}`;
   const getIpResponse = await new Promise((resolve, reject) => {
     request.get(getIpUrl, (getIpError, getIpResponse, getIpBody) => {
-        if (getIpError) {
-          reject(getIpError);
-        } else {
-          resolve({ response: getIpResponse, body: getIpBody });
-        }
+      if (getIpError) {
+        reject(getIpError);
+      } else {
+        resolve({ response: getIpResponse, body: getIpBody });
+      }
     });
   });
   console.log('💡 获取当前白名单的响应：', getIpResponse.body);
@@ -176,33 +176,33 @@ async function main() {
   const oldip = await readSavedIp();
   if (currentIP) {
     const whiteip = await getwhiteip();
-    if (whiteip.includes(currentIP) == true){
-        console.log('😎 当前IP在白名单中，终止执行');
+    if (whiteip.includes(currentIP) == true) {
+      console.log('😎 当前IP在白名单中，终止执行');
     } else {
-	console.log('💡 当前IP不在白名单响应中，尝试添加');
-        resultMessage = await addIpToWhiteList(currentIP);
-        await sendNotification(resultMessage);
-        const wxpusherResponse = await wxpusherNotify(
-            resultMessage.title,
-            resultMessage.message
-        );
+    	console.log('💡 当前IP不在白名单响应中，尝试添加');
+      resultMessage = await addIpToWhiteList(currentIP);
+      await sendNotification(resultMessage);
+      const wxpusherResponse = await wxpusherNotify(
+        resultMessage.title,
+        resultMessage.message
+      );
     }
-    if (oldip){
-        if (oldip.includes(currentIP) == false){
-            saveIp(currentIP);
-        } else {
-            // console.log("存储IP与当前IP一致");
-        }
-    } else {
+    if (oldip) {
+      if (oldip.includes(currentIP) == false) {
         saveIp(currentIP);
+      } else {
+        // console.log("存储IP与当前IP一致");
+      }
+    } else {
+      saveIp(currentIP);
     }
   } else {
 	  resultMessage = { success: false, title: "巨量获取公网IP失败 ❌", message: "💡 获取公网IP返回空信息，终止执行！" };
 	  await sendNotification(resultMessage);
-      const wxpusherResponse = await wxpusherNotify(
-          resultMessage.title,
-          resultMessage.message
-      );
+    const wxpusherResponse = await wxpusherNotify(
+      resultMessage.title,
+      resultMessage.message
+    );
   }
 }
 
