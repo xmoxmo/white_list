@@ -10,30 +10,30 @@ WxPusher一对一：设置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID自动启动
 let uid = '';
 let ukey= '';
 if (process.env.XIEQU_UID) {		
-	uid = process.env.XIEQU_UID;
+  uid = process.env.XIEQU_UID;
 }
 if (process.env.XIEQU_UKEY) {		
-	ukey = process.env.XIEQU_UKEY;
+  ukey = process.env.XIEQU_UKEY;
 }
 //console.log(uid + '\n' + ukey)
 
 if (uid == ''){
-    console.log('请先定义export XIEQU_UID=(UID)');
-    process.exit(0);
+  console.log('请先定义export XIEQU_UID=(UID)');
+  process.exit(0);
 }
 if (ukey == ''){
-    console.log('请先定义export XIEQU_UKEY=(UKEY)');
-    process.exit(0);
+  console.log('请先定义export XIEQU_UKEY=(UKEY)');
+  process.exit(0);
 }
 
 // 一对一通知
 let WP_APP_TOKEN_ONE = '';
 let WP_APP_MAIN_UID = '';
 if (process.env.WP_APP_TOKEN_ONE) {		
-	WP_APP_TOKEN_ONE = process.env.WP_APP_TOKEN_ONE;
+  WP_APP_TOKEN_ONE = process.env.WP_APP_TOKEN_ONE;
 }
 if (process.env.WP_APP_MAIN_UID) {		
-	WP_APP_MAIN_UID = process.env.WP_APP_MAIN_UID;
+  WP_APP_MAIN_UID = process.env.WP_APP_MAIN_UID;
 }
 
 const fs = require('fs');
@@ -120,11 +120,11 @@ async function getwhiteip() {
   const getIpUrl = `http://op.xiequ.cn/IpWhiteList.aspx?uid=${uid}&ukey=${ukey}&act=get`;
   const getIpResponse = await new Promise((resolve, reject) => {
     request.get(getIpUrl, (getIpError, getIpResponse, getIpBody) => {
-        if (getIpError) {
-          reject(getIpError);
-        } else {
-          resolve({ response: getIpResponse, body: getIpBody });
-        }
+      if (getIpError) {
+        reject(getIpError);
+      } else {
+        resolve({ response: getIpResponse, body: getIpBody });
+      }
     });
   });
   console.log('💡 获取当前白名单的响应：', getIpResponse.body);
@@ -136,11 +136,11 @@ async function delwhiteip(oldip) {
   const delIpUrl = `http://op.xiequ.cn/IpWhiteList.aspx?uid=${uid}&ukey=${ukey}&act=del&ip=${oldip}`;
   const delIpResponse = await new Promise((resolve, reject) => {
     request.get(delIpUrl, (delIpError, delIpResponse, delIpBody) => {
-        if (delIpError) {
-          reject(delIpError);
-        } else {
-          resolve({ response: delIpResponse, body: delIpBody });
-        }
+      if (delIpError) {
+        reject(delIpError);
+      } else {
+        resolve({ response: delIpResponse, body: delIpBody });
+      }
     });
   });
   console.log('💡 白名单中删除上次IP:', oldip, ',', delIpResponse.body);
@@ -189,39 +189,39 @@ async function main() {
   if (currentIP) {
     const whiteip = await getwhiteip();
     if (oldip){
-        if (oldip.includes(currentIP) == false){
-            if (whiteip.includes(oldip) == true){
-                await delwhiteip(oldip);
-            }
+      if (oldip.includes(currentIP) == false){
+        if (whiteip.includes(oldip) == true){
+          await delwhiteip(oldip);
         }
+      }
     }
     if (whiteip.includes(currentIP) == true){
-        console.log('😎 当前IP在白名单中，终止添加');
+      console.log('😎 当前IP在白名单中，终止添加');
     } else {
-	console.log('💡 当前IP不在白名单响应中，尝试添加');
-        resultMessage = await addIpToWhiteList(currentIP);
-        await sendNotification(resultMessage);
-        const wxpusherResponse = await wxpusherNotify(
-            resultMessage.title,
-            resultMessage.message
-        );
+      console.log('💡 当前IP不在白名单响应中，尝试添加');
+      resultMessage = await addIpToWhiteList(currentIP);
+      await sendNotification(resultMessage);
+      const wxpusherResponse = await wxpusherNotify(
+        resultMessage.title,
+        resultMessage.message
+      );
     }
     if (oldip){
-        if (oldip.includes(currentIP) == false){
-            saveIp(currentIP);
-        } else {
-            // console.log('存储IP与当前IP一致');
-        }
-    } else {
+      if (oldip.includes(currentIP) == false){
         saveIp(currentIP);
+      } else {
+        // console.log('存储IP与当前IP一致');
+      }
+    } else {
+      saveIp(currentIP);
     }
   } else {
-	  resultMessage = { success: false, title: "携趣获取公网IP失败 ❌", message: "💡 获取公网IP返回空信息，终止执行！" };
-	  await sendNotification(resultMessage);
-      const wxpusherResponse = await wxpusherNotify(
-          resultMessage.title,
-          resultMessage.message
-      );
+    resultMessage = { success: false, title: "携趣获取公网IP失败 ❌", message: "💡 获取公网IP返回空信息，终止执行！" };
+    await sendNotification(resultMessage);
+    const wxpusherResponse = await wxpusherNotify(
+        resultMessage.title,
+        resultMessage.message
+    );
   }
 }
 
