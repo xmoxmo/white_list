@@ -131,6 +131,7 @@ async function getwhiteip() {
         }
     });
   });
+  console.log('💡 获取当前白名单的响应：', getIpResponse.body);
   return getIpResponse.body;
 }
 
