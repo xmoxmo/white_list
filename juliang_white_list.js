@@ -10,10 +10,10 @@ WxPusher一对一：设置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID自动启动
 let trade_no = '';
 let key= '';
 if (process.env.juliang_trade_no) {		
-	trade_no = process.env.juliang_trade_no;
+  trade_no = process.env.juliang_trade_no;
 }
 if (process.env.juliang_key) {		
-	key = process.env.juliang_key;
+  key = process.env.juliang_key;
 }
 //console.log(trade_no + '\n' + key)
 
@@ -30,10 +30,10 @@ if (key == '') {
 let WP_APP_TOKEN_ONE = '';
 let WP_APP_MAIN_UID = '';
 if (process.env.WP_APP_TOKEN_ONE) {		
-	WP_APP_TOKEN_ONE = process.env.WP_APP_TOKEN_ONE;
+  WP_APP_TOKEN_ONE = process.env.WP_APP_TOKEN_ONE;
 }
 if (process.env.WP_APP_MAIN_UID) {		
-	WP_APP_MAIN_UID = process.env.WP_APP_MAIN_UID;
+  WP_APP_MAIN_UID = process.env.WP_APP_MAIN_UID;
 }
 
 const fs = require('fs');
@@ -179,7 +179,7 @@ async function main() {
     if (whiteip.includes(currentIP) == true) {
       console.log('😎 当前IP在白名单中，终止执行');
     } else {
-    	console.log('💡 当前IP不在白名单响应中，尝试添加');
+      console.log('💡 当前IP不在白名单响应中，尝试添加');
       resultMessage = await addIpToWhiteList(currentIP);
       await sendNotification(resultMessage);
       const wxpusherResponse = await wxpusherNotify(
@@ -197,8 +197,8 @@ async function main() {
       saveIp(currentIP);
     }
   } else {
-	  resultMessage = { success: false, title: "巨量获取公网IP失败 ❌", message: "💡 获取公网IP返回空信息，终止执行！" };
-	  await sendNotification(resultMessage);
+    resultMessage = { success: false, title: "巨量获取公网IP失败 ❌", message: "💡 获取公网IP返回空信息，终止执行！" };
+    await sendNotification(resultMessage);
     const wxpusherResponse = await wxpusherNotify(
       resultMessage.title,
       resultMessage.message
