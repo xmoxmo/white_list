@@ -1872,6 +1872,9 @@ function wxpusherNotifyByOne(text, desp, strsummary = "") {
     return new Promise((resolve) => {
         if (WP_APP_TOKEN_ONE) {
             var WPURL = "";
+            if (process.env.WP_ONE_URL) {
+                WPURL = process.env.WP_ONE_URL;
+            }
             if (strsummary && strsummary.length > 96) {
                 //strsummary = strsummary.substring(0, 95) + "...";
             }
