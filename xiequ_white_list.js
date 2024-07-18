@@ -9,10 +9,10 @@ WxPusher一对一：设置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID自动启动
 // 定义uid(业务编号)和ukey(提取API页面最下面)
 let uid = '';
 let ukey= '';
-if (process.env.XIEQU_UID) {		
+if (process.env.XIEQU_UID) {
   uid = process.env.XIEQU_UID;
 }
-if (process.env.XIEQU_UKEY) {		
+if (process.env.XIEQU_UKEY) {
   ukey = process.env.XIEQU_UKEY;
 }
 //console.log(uid + '\n' + ukey)
@@ -29,10 +29,10 @@ if (ukey == '') {
 // 一对一通知
 let WP_APP_TOKEN_ONE = '';
 let WP_APP_MAIN_UID = '';
-if (process.env.WP_APP_TOKEN_ONE) {		
+if (process.env.WP_APP_TOKEN_ONE) {
   WP_APP_TOKEN_ONE = process.env.WP_APP_TOKEN_ONE;
 }
-if (process.env.WP_APP_MAIN_UID) {		
+if (process.env.WP_APP_MAIN_UID) {
   WP_APP_MAIN_UID = process.env.WP_APP_MAIN_UID;
 }
 
