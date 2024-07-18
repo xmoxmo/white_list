@@ -9,10 +9,10 @@ WxPusher一对一：设置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID自动启动
 // 定义trade_no(业务编号)和key(提取API页面最下面)
 let trade_no = '';
 let key= '';
-if (process.env.juliang_trade_no) {		
+if (process.env.juliang_trade_no) {
   trade_no = process.env.juliang_trade_no;
 }
-if (process.env.juliang_key) {		
+if (process.env.juliang_key) {
   key = process.env.juliang_key;
 }
 //console.log(trade_no + '\n' + key)
@@ -29,10 +29,10 @@ if (key == '') {
 // 一对一通知
 let WP_APP_TOKEN_ONE = '';
 let WP_APP_MAIN_UID = '';
-if (process.env.WP_APP_TOKEN_ONE) {		
+if (process.env.WP_APP_TOKEN_ONE) {
   WP_APP_TOKEN_ONE = process.env.WP_APP_TOKEN_ONE;
 }
-if (process.env.WP_APP_MAIN_UID) {		
+if (process.env.WP_APP_MAIN_UID) {
   WP_APP_MAIN_UID = process.env.WP_APP_MAIN_UID;
 }
 
