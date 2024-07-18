@@ -215,7 +215,7 @@ function delay(ms) {
 function wxpusherNotify(text, desp, strsummary = "") {
     return new Promise((resolve) => {
         if (WP_APP_TOKEN_ONE && WP_APP_MAIN_UID) {
-            var WPURL = "";            
+            var WPURL = "https://www.juliangip.com/";            
             if (strsummary && strsummary.length > 96) {
                 strsummary = strsummary.substring(0, 95) + "...";
             }
