@@ -29,23 +29,23 @@ if (process.env.PINZAN_SIGNKEY) {
 }
 
 if (no == '') {
-  console.log('请先定义export PINZAN_NO=(no)');
+  console.log('请先定义export PINZAN_NO="业务编号"');
   process.exit(0);
 }
 if (userId == '') {
-  console.log('请先定义export PINZAN_USERID=(userId)');
+  console.log('请先定义export PINZAN_USERID="用户id"');
   process.exit(0);
 }
 if (password == '') {
-  console.log('请先定义export PINZAN_PASSWORD=(password)');
+  console.log('请先定义export PINZAN_PASSWORD="登录密码"');
   process.exit(0);
 }
 if (getkey == '') {
-  console.log('请先定义export PINZAN_GETKEY=(getkey)');
+  console.log('请先定义export PINZAN_GETKEY="套餐提取密匙"');
   process.exit(0);
 }
 if (signkey == '') {
-  console.log('请先定义export PINZAN_SIGNKEY=(signkey)');
+  console.log('请先定义export PINZAN_SIGNKEY="签名密匙"');
   process.exit(0);
 }
 
