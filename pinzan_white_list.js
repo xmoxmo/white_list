@@ -1,6 +1,6 @@
 /*
 new Env('品赞IP白名单');
-35 0-23 * * * xiequ_white_list.js
+35 0-23 * * * pinzan_white_list.js
 by:xmo
 品赞白名单自动替换
 WxPusher一对一：设置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID自动启动
