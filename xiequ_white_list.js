@@ -128,6 +128,7 @@ async function getwhiteip() {
     });
   });
   console.log('💡 获取当前白名单的响应：', getIpResponse.body);
+  await delay(1000);
   return getIpResponse.body;
 }
 
@@ -144,6 +145,7 @@ async function delwhiteip(oldip) {
     });
   });
   console.log('💡 白名单中删除上次IP:', oldip, ',', delIpResponse.body);
+  await delay(1000);
   return delIpResponse.body;
 }
 
