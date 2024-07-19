@@ -267,7 +267,7 @@ function delay(ms) {
 function wxpusherNotify(text, desp, strsummary = "") {
     return new Promise((resolve) => {
         if (WP_APP_TOKEN_ONE && WP_APP_MAIN_UID) {
-            var WPURL = "https://www.xiequ.cn/";            
+            var WPURL = "https://xip.ipzan.com/";            
             if (strsummary && strsummary.length > 96) {
                 strsummary = strsummary.substring(0, 95) + "...";
             }
