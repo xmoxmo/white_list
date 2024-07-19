@@ -63,7 +63,7 @@ const fs = require('fs');
 const request = require('request');
 const notify = require('./sendNotify');
 const CryptoJS = require('crypto-js')
-const ipFileName = 'xiequIp.txt';
+const ipFileName = 'pinzanIp.txt';
 
 function readSavedIp() {
   try {
