@@ -132,6 +132,7 @@ async function getwhiteip() {
     });
   });
   console.log('💡 获取当前白名单的响应：', getIpResponse.body);
+  await delay(1000);
   return getIpResponse.body;
 }
 
