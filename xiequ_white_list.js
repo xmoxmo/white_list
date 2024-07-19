@@ -8,7 +8,7 @@ WxPusher一对一：设置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID自动启动
 
 // 定义uid(业务编号)和ukey(提取API页面最下面)
 let uid = '';
-let ukey= '';
+let ukey = '';
 if (process.env.XIEQU_UID) {
   uid = process.env.XIEQU_UID;
 }
