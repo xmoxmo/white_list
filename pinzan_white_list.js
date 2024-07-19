@@ -15,8 +15,8 @@ let signkey = '';
 if (process.env.PINZAN_NO) {
   no = process.env.PINZAN_NO;
 }
-if (process.env.PINZAN_ID) {
-  userId = process.env.PINZAN_ID;
+if (process.env.PINZAN_USERID) {
+  userId = process.env.PINZAN_USERID;
 }
 if (process.env.PINZAN_PASSWORD) {
   password = process.env.PINZAN_PASSWORD;
@@ -33,7 +33,7 @@ if (no == '') {
   process.exit(0);
 }
 if (userId == '') {
-  console.log('请先定义export PINZAN_ID=(userId)');
+  console.log('请先定义export PINZAN_USERID=(userId)');
   process.exit(0);
 }
 if (password == '') {
