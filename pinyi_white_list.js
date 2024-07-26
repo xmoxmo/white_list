@@ -105,7 +105,7 @@ async function addIpToWhiteList(currentIP) {
     message = successCondition ? `🎉 IP地址已更新：${currentIP}` : `💡 IP地址添加失败: ${addIpResponse.body}`;
     title = successCondition ? "品易白名单更换成功 ✅" : "品易白名单更换失败 ❌"; 
     console.log(randomEmoji + ' 添加IP到白名单的响应:', addIpResponse.body);
-    await delay(1000);
+    await delay(2000);
     return { success: successCondition, title, message };
   } catch (error) {
     console.error('💡 添加IP到白名单发生错误:', error);
@@ -127,7 +127,7 @@ async function getwhiteip() {
     });
   });
   console.log('💡 获取当前白名单的响应：', getIpResponse.body);
-  await delay(1000);
+  await delay(2000);
   return getIpResponse.body;
 }
 
@@ -144,7 +144,7 @@ async function delwhiteip(oldip) {
     });
   });
   console.log('💡 白名单中删除上次IP:', oldip, ',', delIpResponse.body);
-  await delay(1000);
+  await delay(2000);
   return delIpResponse.body;
 }
 
@@ -235,7 +235,7 @@ function delay(ms) {
 function wxpusherNotify(text, desp, strsummary = "") {
     return new Promise((resolve) => {
         if (WP_APP_TOKEN_ONE && WP_APP_MAIN_UID) {
-            var WPURL = "https://www.pinyi.cn/";            
+            var WPURL = "https://http.py.cn/";            
             if (strsummary && strsummary.length > 96) {
                 strsummary = strsummary.substring(0, 95) + "...";
             }
