@@ -6,7 +6,7 @@ by:xmo
 WxPusher一对一：设置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID自动启动
 */
 
-// 定义uid(业务编号)和ukey(提取API页面最下面)
+// 定义no(业务编号)、userId(用户id)、password(登录密码)、getkey(套餐提取密匙)、signkey(签名密匙)
 let no = '';
 let userId = '';
 let password = '';
