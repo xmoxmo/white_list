@@ -137,7 +137,7 @@ async function addIpToWhiteList(currentIP) {
     message = successCondition ? `🎉 IP地址已更新：${currentIP}` : `💡 IP地址添加失败: ${addIpResponse.body}`;
     title = successCondition ? "品赞白名单更换成功 ✅" : "品赞白名单更换失败 ❌"; 
     console.log(randomEmoji + ' 添加IP到白名单的响应:', addIpResponse.body);
-    await delay(1000);
+    await delay(2000);
     return { success: successCondition, title, message };
   } catch (error) {
     console.error('💡 添加IP到白名单发生错误:', error);
@@ -160,7 +160,7 @@ async function getwhiteip() {
     });
   });
   console.log('💡 获取当前白名单的响应：', getIpResponse.body);
-  await delay(1000);
+  await delay(2000);
   return getIpResponse.body;
 }
 
@@ -178,7 +178,7 @@ async function delwhiteip(oldip) {
     });
   });
   console.log('💡 白名单中删除上次IP:', oldip, ',', delIpResponse.body);
-  await delay(1000);
+  await delay(2000);
   return delIpResponse.body;
 }
 
