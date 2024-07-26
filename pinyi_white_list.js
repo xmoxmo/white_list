@@ -18,11 +18,11 @@ if (process.env.PINYI_APPKEY) {
 //console.log(neek + '\n' + appkey)
 
 if (neek == '') {
-  console.log('请先定义export PINYI_NEEK=(UID)');
+  console.log('请先定义export PINYI_NEEK=(neek)');
   process.exit(0);
 }
 if (appkey == '') {
-  console.log('请先定义export PINYI_APPKEY=(UKEY)');
+  console.log('请先定义export PINYI_APPKEY=(appkey)');
   process.exit(0);
 }
 
@@ -239,10 +239,10 @@ function wxpusherNotify(text, desp, strsummary = "") {
             if (strsummary && strsummary.length > 96) {
                 strsummary = strsummary.substring(0, 95) + "...";
             }
-            let neeks = [];
+            let uids = [];
             for (let i of WP_APP_MAIN_UID.split(";")) {
                 if (i.length != 0)
-                    neeks.push(i);
+                    uids.push(i);
             };
             let topicIds = [];
             //desp = `<font size="3">${desp}</font>`;
@@ -284,7 +284,7 @@ function wxpusherNotify(text, desp, strsummary = "") {
                 summary: `${text} ${strsummary}`,
                 contentType: 2,
                 topicIds: topicIds,
-                neeks: neeks,
+                uids: uids,
                 url: `${WPURL}`,
             };
             const options = {
