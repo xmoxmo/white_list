@@ -177,8 +177,8 @@ async function main() {
   const oldip = await readSavedIp();
   if (currentIP) {
     const whiteip = await getwhiteip();
-    if (whiteip.includes('当前业务无可用余量') == true) {
-      console.log('🚀 当前业务无可用余量，终止执行');
+    if (whiteip.includes('请求成功') == false) {
+      console.log('❌ 白名单请求失败，终止执行');
       process.exit(0);
     } 
     if (whiteip.includes(currentIP) == true) {
