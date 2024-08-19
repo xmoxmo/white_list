@@ -239,7 +239,7 @@ function delay(ms) {
 function wxpusherNotify(text, desp, strsummary = "") {
     return new Promise((resolve) => {
         if (WP_APP_TOKEN_ONE && WP_APP_MAIN_UID) {
-            var WPURL = "https://http.py.cn/";            
+            var WPURL = "http://yyyip.cn/";            
             if (strsummary && strsummary.length > 96) {
                 strsummary = strsummary.substring(0, 95) + "...";
             }
