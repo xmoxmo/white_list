@@ -52,16 +52,16 @@ msg = ">>>开始执行..."
 # 置空IP地址
 ip = ""
 
-# 尝试使用3322.org网站获取公网IP
+# 尝试使用pubyun.com网站获取公网IP
 try:
-    url = "http://members.3322.org/dyndns/getip/"
+    url = "https://www.pubyun.com/dyndns/getip/"
     response = requests.get(url)
     ip = response.text.strip()
-    print(f">>>使用3322.org获取公网IP成功：{ip}")
-    msg = msg + "\n" + f">>>使用3322.org获取公网IP成功：{ip}"
+    print(f">>>使用pubyun.com获取公网IP成功：{ip}")
+    msg = msg + "\n" + f">>>使用pubyun.com获取公网IP成功：{ip}"
 except requests.RequestException as e:
-    print(">>>使用3322.org获取公网IP失败，尝试其他方式...")
-    msg = msg + "\n" + ">>>使用3322.org获取公网IP失败，尝试其他方式..."
+    print(">>>使用pubyun.com获取公网IP失败，尝试其他方式...")
+    msg = msg + "\n" + ">>>使用pubyun.com获取公网IP失败，尝试其他方式..."
 
 #ip = ""
 
