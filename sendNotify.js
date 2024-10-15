@@ -1,37 +1,27 @@
 /*
- * sendNotify 推送通知功能
- * @param text 通知头
- * @param desp 通知体
- * @param params 某些推送通知方式点击弹窗可跳转, 例：{ url: 'https://abc.com' }
- * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
- 部分变量设置
-## 拆分通知
-export BEANCHANGE_PERSENT="10"
-## 如果通知标题在此变量里面存在(&隔开),则用屏蔽不发送通知
-export NOTIFY_SKIP_LIST="京东CK检测&京东资产变动"
-## 当接收到发送CK失效通知和Ninja 运行通知时候执行子线程任务
-export NOTIFY_CKTASK="jd_CheckCK.js"
-## 如果此变量(&隔开)的关键字在通知内容里面存在,则屏蔽不发送通知.
-export NOTIFY_SKIP_TEXT="忘了种植&异常"
-## 屏蔽任务脚本的ck失效通知
-export NOTIFY_NOCKFALSE="true"
-## 服务器空数据等错误不触发通知
-export CKNOWARNERROR="true"
-## 屏蔽青龙登陆成功通知，登陆失败不屏蔽
-export NOTIFY_NOLOGINSUCCESS="true"
-## 通知底部显示
-export NOTIFY_AUTHOR="来源于：https://github.com/KingRan/KR"
-## 增加NOTIFY_AUTHOR_BLANK 环境变量，控制不显示底部信息
-export NOTIFY_AUTHOR_BLANK="true"
-## 增加NOTIFY_AUTOCHECKCK为true才开启通知脚本内置的自动禁用过期ck
-export NOTIFY_AUTOCHECKCK=“true”
+ * @Author: ccwav https://github.com/ccwav/QLScript2 
+ 
+ * sendNotify 推送通知功能 (text, desp, params , author , strsummary)
+ * @param text 通知标题  (必要)
+ * @param desp 通知内容  (必要)
+ * @param params 某些推送通知方式点击弹窗可跳转, 例：{ url: 'https://abc.com' } ，没啥用,只是为了兼容旧脚本保留  (非必要)
+ * @param author 通知底部作者`  (非必要)
+ * @param strsummary 指定某些微信模板通知的预览信息，空则默认为desp  (非必要)
+ 
+ * sendNotifybyWxPucher 一对一推送通知功能 (text, desp, PtPin, author, strsummary )
+ * @param text 通知标题  (必要)
+ * @param desp 通知内容  (必要)
+ * @param PtPin CK的PTPIN (必要)
+ * @param author 通知底部作者`  (非必要)
+ * @param strsummary 指定某些微信模板通知的预览信息，空则默认为desp  (非必要)
+ 
  */
 //详细说明参考 https://github.com/ccwav/QLScript2.
 const querystring = require('querystring');
 const exec = require('child_process').exec;
 const $ = new Env();
 const timeout = 15000; //超时时间(单位毫秒)
-console.log("   *加载sendNotify，当前版本: 20230712[20240715]+fs202407180947");
+console.log("   *加载sendNotify，当前版本: 20230712[20240715]+fs202410151635");
 // =======================================go-cqhttp通知设置区域===========================================
 //gobot_url 填写请求地址http://127.0.0.1/send_private_msg
 //gobot_token 填写在go-cqhttp文件设置的访问密钥
@@ -101,7 +91,6 @@ let QYWX_AM = '';
 //(环境变量名 FSKEY)
 let FSKEY = '';
 
-
 // =======================================iGot聚合推送通知设置区域===========================================
 //此处填您iGot的信息(推送key，例如：https://push.hellyw.com/XXXXXXXX)
 let IGOT_PUSH_KEY = '';
@@ -166,7 +155,6 @@ if (isnewql) {
     strCKFile = '/ql/scripts/CKName_cache.json';
     strUidFile = '/ql/scripts/CK_WxPusherUid.json';
 }
-    
 
 let Fileexists = fs.existsSync(strCKFile);
 let TempCK = [];
@@ -207,7 +195,7 @@ if (process.env.NOTIFY_SHOWNAMETYPE) {
     if (ShowRemarkType == "4")
         console.log("检测到显示备注名称，格式为: 备注");
 }
-async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By xmo',strsummary="") {
+async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By ${author}`,strsummary="") {
     console.log(`开始发送通知...`);
 
     //NOTIFY_FILTERBYFILE代码来自Ca11back.
@@ -226,7 +214,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By xm
             }
         }
     }
-    
+
     try {
         //Reset 变量
         UseGroupNotify = 1;
@@ -295,13 +283,18 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By xm
         }
 
         if (text.indexOf("cookie已失效") != -1 || desp.indexOf("重新登录获取") != -1 || text == "Ninja 运行通知") {
-
             if (Notify_CKTask) {
                 console.log("触发CK脚本，开始执行....");
-                Notify_CKTask = "task " + Notify_CKTask + " now";
-                await exec(Notify_CKTask, function (error, stdout, stderr) {
-                    console.log(error, stdout, stderr)
-                });
+                await exec(`ps -ef|grep -v grep|grep ${Notify_CKTask}`, async function (err, stdout, stderr){
+                if (!stdout) {
+                    Notify_CKTask = "task " + Notify_CKTask + " now";
+                    console.log(Notify_CKTask)
+                    await exec(Notify_CKTask);
+                } else {
+                    console.log('已有相同任务在执行,跳过此次执行！\n')
+                        return
+                    }
+                })
             }
         }
         if (process.env.NOTIFY_AUTOCHECKCK == "true") {
@@ -429,14 +422,14 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By xm
                     return;
             }
         }
-        
+
         if (strtext.indexOf("cookie已失效") != -1 || strdesp.indexOf("重新登录获取") != -1 || strtext == "Ninja 运行通知") {
             if (Notify_NoCKFalse == "true" && text != "Ninja 运行通知") {
                 console.log(`检测到NOTIFY_NOCKFALSE变量为true,不发送ck失效通知...`);
                 return;
             }
         }
-        
+
         if (text.indexOf("已可领取") != -1) {
             if (text.indexOf("农场") != -1) {
                 strTitle = "东东农场领取";
@@ -457,7 +450,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By xm
         if (text.indexOf("任务") != -1 && (text.indexOf("新增") != -1 || text.indexOf("删除") != -1)) {
             strTitle = "脚本任务更新";
         }
-        
+
         if (strTitle) {
             const notifyRemindList = process.env.NOTIFY_NOREMIND ? process.env.NOTIFY_NOREMIND.split('&') : [];
             titleIndex = notifyRemindList.findIndex((item) => item === strTitle);
@@ -482,12 +475,12 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By xm
             var strPtPin = await GetPtPin(text);
             var strdecPtPin = decodeURIComponent(strPtPin);
             if (strPtPin) {
-                await sendNotifybyWxPucher("汪汪乐园领取通知", `【京东账号】${strdecPtPin}\n当前等级: 30\n请自行去解锁新场景,奖励领取方式如下:\n极速版APP->我的->汪汪乐园,点击左上角头像，点击中间靠左的现金奖励图标，弹出历史奖励中点击领取.`, strdecPtPin);
+                await sendNotifybyWxPucher("汪汪乐园领取通知", `【京东账号】${strdecPtPin}\n当前等级: 30\n请到京东极速版APP提现6.66\n活动入口：京东极速版APP->我的->汪汪乐园->点礼包`, strdecPtPin);
             }
         }
 
         console.log("通知标题: " + strTitle);
-        
+
         //检查黑名单屏蔽通知
         const notifySkipList = process.env.NOTIFY_SKIP_LIST ? process.env.NOTIFY_SKIP_LIST.split('&') : [];
         titleIndex = notifySkipList.findIndex((item) => item === strTitle);
@@ -887,19 +880,19 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By xm
     //由于上述两种微信通知需点击进去才能查看到详情，故text(标题内容)携带了账号序号以及昵称信息，方便不点击也可知道是哪个京东哪个活动
     text = text.match(/.*?(?=\s?-)/g) ? text.match(/.*?(?=\s?-)/g)[0] : text;
     await Promise.all([
-            BarkNotify(text, desp, params), //iOS Bark APP
-            tgBotNotify(text, desp), //telegram 机器人
-            ddBotNotify(text, desp), //钉钉机器人
-            qywxBotNotify(text, desp), //企业微信机器人
-            qywxamNotify(text, desp, strsummary), //企业微信应用消息推送
-            fsBotNotify(text, desp),   //飞书机器人
-            iGotNotify(text, desp, params), //iGot
-            gobotNotify(text, desp), //go-cqhttp
-            gotifyNotify(text, desp), //gotify
-            bncrNotify(text, desp), //bncr
-            wxpusherNotify(text, desp), // wxpusher
-            PushDeerNotify(text, desp) //pushdeer推送
-        ]);
+        BarkNotify(text, desp, params), //iOS Bark APP
+        tgBotNotify(text, desp), //telegram 机器人
+        ddBotNotify(text, desp), //钉钉机器人
+        qywxBotNotify(text, desp), //企业微信机器人
+        qywxamNotify(text, desp, strsummary), //企业微信应用消息推送
+        fsBotNotify(text, desp),   //飞书机器人
+        iGotNotify(text, desp, params), //iGot
+        gobotNotify(text, desp), //go-cqhttp
+        gotifyNotify(text, desp), //gotify
+        bncrNotify(text, desp), //bncr
+        wxpusherNotify(text, desp), // wxpusher
+        PushDeerNotify(text, desp) //pushdeer推送
+    ]);
 }
 
 function getuuid(strRemark, PtPin) {
@@ -992,7 +985,7 @@ function getRemark(strRemark) {
     }
 }
 
-async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n\n本通知 By KR仓库', strsummary = "") {
+async function sendNotifybyWxPucher(text, desp, PtPin, author = `\n\n本通知 By ${author}`, strsummary = "") {
 
     try {
         var Uid = "";
@@ -1340,46 +1333,6 @@ function serverNotify(text, desp, time = 2100) {
     });
 }
 
-/* function BarkNotify(text, desp, params = {}) {
-    return new Promise((resolve) => {
-        if (BARK_PUSH) {
-            const options = {
-                url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(
-          desp
-        )}?sound=${BARK_SOUND}&group=${BARK_GROUP}&${querystring.stringify(params)}`,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                timeout,
-            };
-            $.get(options, (err, resp, data) => {
-                try {
-                    if (err) {
-                        console.log('Bark APP发送通知调用API失败！！\n');
-                        console.log(err);
-                    } else {
-                        data = JSON.parse(data);
-                        if (data.code === 200) {
-                            console.log('Bark APP发送通知消息成功🎉\n');
-                        } else {
-                            console.log(`${data.message}\n`);
-                        }
-                    }
-                } catch (e) {
-                    $.logErr(e, resp);
-                }
-                finally {
-                    resolve();
-                }
-            });
-        } else {
-            resolve();
-        }
-    });
-    } */
-
-
-/* code from JoveYu */
 function BarkNotify(text, desp, params = {}) {
     return new Promise((resolve) => {
         if (BARK_PUSH) {
@@ -1389,7 +1342,7 @@ function BarkNotify(text, desp, params = {}) {
                     title: text,
                     body: desp,
                     group: `${BARK_GROUP}`,
-                    icon: `${BARK_ICON}`,
+                    //icon: `${BARK_ICON}`,
                     sound: `${BARK_SOUND}`,
                 },
                 headers: {
@@ -1423,58 +1376,58 @@ function BarkNotify(text, desp, params = {}) {
 }
 
 function tgBotNotify(text, desp) {
-  return new Promise(resolve => {
-    if (TG_BOT_TOKEN && TG_USER_ID) {
-      const options = {
-        url: `https://${TG_API_HOST}/bot${TG_BOT_TOKEN}/sendMessage`,
-        json: {
-            chat_id: `${TG_USER_ID}`,
-            text: `${text}\n\n${desp}`,
-            disable_web_page_preview: true
-          },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        timeout
-      }
-      if (TG_PROXY_HOST && TG_PROXY_PORT) {
-        const tunnel = require("tunnel");
-        const agent = {
-          https: tunnel.httpsOverHttp({
-            proxy: {
-              host: TG_PROXY_HOST,
-              port: TG_PROXY_PORT * 1,
-              proxyAuth: TG_PROXY_AUTH
+    return new Promise(resolve => {
+        if (TG_BOT_TOKEN && TG_USER_ID) {
+            const options = {
+                url: `https://${TG_API_HOST}/bot${TG_BOT_TOKEN}/sendMessage`,
+                json: {
+                    chat_id: `${TG_USER_ID}`,
+                    text: `${text}\n\n${desp}`,
+                    disable_web_page_preview: true
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                timeout
             }
-          })
-        }
-        Object.assign(options, { agent })
-      }
-      $.post(options, (err, resp, data) => {
-        try {
-          if (err) {
-            console.log('telegram发送通知消息失败！！\n')
-            console.log(err);
-          } else {
-            data = JSON.parse(data);
-            if (data.ok) {
-              console.log('Telegram发送通知消息成功🎉\n')
-            } else if (data.error_code === 400) {
-              console.log('请主动给bot发送一条消息并检查接收用户ID是否正确。\n')
-            } else if (data.error_code === 401) {
-              console.log('Telegram bot token 填写错误。\n')
+            if (TG_PROXY_HOST && TG_PROXY_PORT) {
+                const tunnel = require("tunnel");
+                const agent = {
+                    https: tunnel.httpsOverHttp({
+                        proxy: {
+                            host: TG_PROXY_HOST,
+                            port: TG_PROXY_PORT * 1,
+                            proxyAuth: TG_PROXY_AUTH
+                        }
+                    })
+                }
+                Object.assign(options, { agent })
             }
-          }
-        } catch (e) {
-          $.logErr(e, resp);
-        } finally {
-          resolve(data);
+            $.post(options, (err, resp, data) => {
+                try {
+                    if (err) {
+                        console.log('telegram发送通知消息失败！！\n')
+                        console.log(err);
+                    } else {
+                        data = JSON.parse(data);
+                        if (data.ok) {
+                            console.log('Telegram发送通知消息成功🎉\n')
+                        } else if (data.error_code === 400) {
+                            console.log('请主动给bot发送一条消息并检查接收用户ID是否正确。\n')
+                        } else if (data.error_code === 401) {
+                            console.log('Telegram bot token 填写错误。\n')
+                        }
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve(data);
+                }
+            })
+        } else {
+            resolve()
         }
-      })
-    } else {     
-      resolve()
-    }
-  })
+    })
 }
 
 function ddBotNotify(text, desp) {
