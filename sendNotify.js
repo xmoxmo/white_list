@@ -2134,21 +2134,65 @@ function GetnickName2() {
 const gotModule = require('got');
 const got = gotModule.default || gotModule;
 require('dotenv').config();
-let exists = fs.existsSync('/ql/data/config/auth.json');
-let authFile = "";
-if (exists)
-    authFile = "/ql/data/config/auth.json"
-else
-    authFile = "/ql/config/auth.json"
+const { readFile } = require('fs/promises');
 
-const api = got.extend({
-    prefixUrl: 'http://127.0.0.1:5600',
-    retry: { limit: 0 },
-});
+// ===== 多路径 token 检测（兼容新旧 QL） =====
+const tokenFileList = ['/ql/data/db/keyv.sqlite', '/ql/data/config/auth.json', '/ql/config/auth.json'];
+function getLatestFile(files) {
+    let latestFile = null;
+    let latestMtime = 0;
+    for (const file of files) {
+        try {
+            const stats = fs.statSync(file);
+            if (stats.mtimeMs > latestMtime) {
+                latestMtime = stats.mtimeMs;
+                latestFile = file;
+            }
+        } catch (e) { }
+    }
+    return latestFile;
+}
+const authFile = getLatestFile(tokenFileList);
 
+// ===== 5600 / 5700 双端口自动切换 + got v11/v12+ 兼容 =====
+const HOSTS = ['http://127.0.0.1:5600', 'http://127.0.0.1:5700'];
+
+function _makeGotFn(prefixUrl) {
+    if (typeof got.extend === 'function') {
+        return got.extend({ prefixUrl, retry: { limit: 0 }, timeout: { request: 5000 } });
+    }
+    return function (opts) {
+        const merged = { retry: { limit: 0 }, timeout: { request: 5000 }, ...opts };
+        if (merged.url) merged.url = prefixUrl + merged.url;
+        const resp = got(merged);
+        return {
+            json: () => resp.json(),
+            text: () => resp.text(),
+            buffer: () => resp.buffer(),
+        };
+    };
+}
+
+function api(options) {
+    const req = _makeGotFn(HOSTS[0])(options);
+    ['json', 'text', 'buffer'].forEach(m => {
+        const orig = req[m].bind(req);
+        req[m] = () => orig().catch(e => {
+            if (['ECONNREFUSED', 'ETIMEDOUT'].includes(e.code)) {
+                return _makeGotFn(HOSTS[1])(options)[m]();
+            }
+            return Promise.reject(e);
+        });
+    });
+    return req;
+}
+
+// ===== token 读取（兼容新旧 QL 格式） =====
 async function getToken() {
-    const authConfig = JSON.parse(fs.readFileSync(authFile));
-    return authConfig.token;
+    const authConfig = await readFile(authFile);
+    return authConfig.toString().match(/"token":"([^"]+)",/)?.[1] ||
+        authConfig.toString().match(/"token":"([^"]+)"(?=.*"token":)/)?.[1] ||
+        '';
 }
 
 async function getEnvs() {
