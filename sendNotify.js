@@ -195,7 +195,7 @@ if (process.env.NOTIFY_SHOWNAMETYPE) {
     if (ShowRemarkType == "4")
         console.log("检测到显示备注名称，格式为: 备注");
 }
-async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By xmo`,strsummary="") {
+async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By xmo`, strsummary = "") {
     console.log(`开始发送通知...`);
 
     //NOTIFY_FILTERBYFILE代码来自Ca11back.
@@ -223,7 +223,7 @@ async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By xm
         GOBOT_TOKEN = '';
         GOBOT_QQ = '';
         SCKEY = '';
-        PUSHDEER_KEY= '';
+        PUSHDEER_KEY = '';
         BARK_PUSH = '';
         BARK_SOUND = '';
         BARK_GROUP = 'QingLong';
@@ -285,13 +285,13 @@ async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By xm
         if (text.indexOf("cookie已失效") != -1 || desp.indexOf("重新登录获取") != -1 || text == "Ninja 运行通知") {
             if (Notify_CKTask) {
                 console.log("触发CK脚本，开始执行....");
-                await exec(`ps -ef|grep -v grep|grep ${Notify_CKTask}`, async function (err, stdout, stderr){
-                if (!stdout) {
-                    Notify_CKTask = "task " + Notify_CKTask + " now";
-                    console.log(Notify_CKTask)
-                    await exec(Notify_CKTask);
-                } else {
-                    console.log('已有相同任务在执行,跳过此次执行！\n')
+                await exec(`ps -ef|grep -v grep|grep ${Notify_CKTask}`, async function (err, stdout, stderr) {
+                    if (!stdout) {
+                        Notify_CKTask = "task " + Notify_CKTask + " now";
+                        console.log(Notify_CKTask)
+                        await exec(Notify_CKTask);
+                    } else {
+                        console.log('已有相同任务在执行,跳过此次执行！\n')
                         return
                     }
                 })
@@ -489,7 +489,7 @@ async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By xm
             console.log(`${strTitle} 在推送黑名单中，已跳过推送`);
             return;
         }
-        
+
         //检查脚本名称是否需要通知到Group2,Group2读取原环境配置的变量名后加2的值.例如: QYWX_AM2
         for (lncount = 2; lncount < 20; lncount++) {
             if (process.env["NOTIFY_GROUP" + lncount + "_LIST"]) {
@@ -535,54 +535,54 @@ async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By xm
                             for (let Tempk = 2; Tempk < strCustomTempArr.length; Tempk++) {
                                 var strTrmp = strCustomTempArr[Tempk];
                                 switch (strTrmp) {
-                                case "Server酱":
-                                    Use_serverNotify = true;
-                                    console.log("自定义设定启用Server酱进行通知...");
-                                    break;
-                                case "pushdeer":
-                                    Use_pushdeerNotify = true;
-                                    console.log("自定义设定启用pushdeer进行通知...");
+                                    case "Server酱":
+                                        Use_serverNotify = true;
+                                        console.log("自定义设定启用Server酱进行通知...");
                                         break;
-                                case "pushplus":
-                                    Use_pushPlusNotify = true;
-                                    console.log("自定义设定启用pushplus(推送加)进行通知...");
-                                    break;
-                                case "Bark":
-                                    Use_BarkNotify = true;
-                                    console.log("自定义设定启用Bark进行通知...");
-                                    break;
-                                case "TG机器人":
-                                    Use_tgBotNotify = true;
-                                    console.log("自定义设定启用telegram机器人进行通知...");
-                                    break;
-                                case "钉钉":
-                                    Use_ddBotNotify = true;
-                                    console.log("自定义设定启用钉钉机器人进行通知...");
-                                    break;
-                                case "企业微信机器人":
-                                    Use_qywxBotNotify = true;
-                                    console.log("自定义设定启用企业微信机器人进行通知...");
-                                    break;
-                                case "企业微信应用消息":
-                                    Use_qywxamNotify = true;
-                                    console.log("自定义设定启用企业微信应用消息进行通知...");
-                                    break;
-                                case "飞书机器人":
-                                    Use_fsBotNotify = true;
-                                    console.log("自定义设定启用飞书机器人进行通知...");
-                                    break;
-                                case "iGotNotify":
-                                    Use_iGotNotify = true;
-                                    console.log("自定义设定启用iGot进行通知...");
-                                    break;
-                                case "gobotNotify":
-                                    Use_gobotNotify = true;
-                                    console.log("自定义设定启用go-cqhttp进行通知...");
-                                    break;
-                                case "WxPusher":
-                                    Use_WxPusher = true;
-                                    console.log("自定义设定启用WxPusher进行通知...");
-                                    break;
+                                    case "pushdeer":
+                                        Use_pushdeerNotify = true;
+                                        console.log("自定义设定启用pushdeer进行通知...");
+                                        break;
+                                    case "pushplus":
+                                        Use_pushPlusNotify = true;
+                                        console.log("自定义设定启用pushplus(推送加)进行通知...");
+                                        break;
+                                    case "Bark":
+                                        Use_BarkNotify = true;
+                                        console.log("自定义设定启用Bark进行通知...");
+                                        break;
+                                    case "TG机器人":
+                                        Use_tgBotNotify = true;
+                                        console.log("自定义设定启用telegram机器人进行通知...");
+                                        break;
+                                    case "钉钉":
+                                        Use_ddBotNotify = true;
+                                        console.log("自定义设定启用钉钉机器人进行通知...");
+                                        break;
+                                    case "企业微信机器人":
+                                        Use_qywxBotNotify = true;
+                                        console.log("自定义设定启用企业微信机器人进行通知...");
+                                        break;
+                                    case "企业微信应用消息":
+                                        Use_qywxamNotify = true;
+                                        console.log("自定义设定启用企业微信应用消息进行通知...");
+                                        break;
+                                    case "飞书机器人":
+                                        Use_fsBotNotify = true;
+                                        console.log("自定义设定启用飞书机器人进行通知...");
+                                        break;
+                                    case "iGotNotify":
+                                        Use_iGotNotify = true;
+                                        console.log("自定义设定启用iGot进行通知...");
+                                        break;
+                                    case "gobotNotify":
+                                        Use_gobotNotify = true;
+                                        console.log("自定义设定启用go-cqhttp进行通知...");
+                                        break;
+                                    case "WxPusher":
+                                        Use_WxPusher = true;
+                                        console.log("自定义设定启用WxPusher进行通知...");
+                                        break;
 
                                 }
                             }
@@ -624,8 +624,8 @@ async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By xm
         if (process.env["PUSH_KEY" + UseGroupNotify] && Use_serverNotify) {
             SCKEY = process.env["PUSH_KEY" + UseGroupNotify];
         }
-        if (process.env["DEER_KEY"+ UseGroupNotify] && Use_pushdeerNotify) {
-            PUSHDEER_KEY = process.env["DEER_KEY"+ UseGroupNotify];
+        if (process.env["DEER_KEY" + UseGroupNotify] && Use_pushdeerNotify) {
+            PUSHDEER_KEY = process.env["DEER_KEY" + UseGroupNotify];
         }
         if (process.env["WP_APP_TOKEN" + UseGroupNotify] && Use_WxPusher) {
             WP_APP_TOKEN = process.env["WP_APP_TOKEN" + UseGroupNotify];
@@ -656,20 +656,20 @@ async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By xm
             if (process.env["BARK_GROUP" + UseGroupNotify]) {
                 BARK_GROUP = process.env;
             }
-        } 
+        }
         if (process.env["TG_BOT_TOKEN" + UseGroupNotify] && Use_tgBotNotify) {
             TG_BOT_TOKEN = process.env["TG_BOT_TOKEN" + UseGroupNotify];
         }
         if (process.env["TG_USER_ID" + UseGroupNotify] && Use_tgBotNotify) {
             TG_USER_ID = process.env["TG_USER_ID" + UseGroupNotify];
         }
-        if (process.env["TG_PROXY_AUTH"]) 
+        if (process.env["TG_PROXY_AUTH"])
             TG_PROXY_AUTH = process.env["TG_PROXY_AUTH"];
-        if (process.env["TG_PROXY_HOST"]) 
+        if (process.env["TG_PROXY_HOST"])
             TG_PROXY_HOST = process.env["TG_PROXY_HOST"];
-        if (process.env["TG_PROXY_PORT"]) 
-            TG_PROXY_PORT = process.env["TG_PROXY_PORT"];        
-        if (process.env["TG_API_HOST"]) 
+        if (process.env["TG_PROXY_PORT"])
+            TG_PROXY_PORT = process.env["TG_PROXY_PORT"];
+        if (process.env["TG_API_HOST"])
             TG_API_HOST = process.env["TG_API_HOST"];
 
         if (process.env["DD_BOT_TOKEN" + UseGroupNotify] && Use_ddBotNotify) {
@@ -690,7 +690,7 @@ async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By xm
         if (process.env["FSKEY" + UseGroupNotify] && Use_fsBotNotify) {
             FSKEY = process.env["FSKEY" + UseGroupNotify];
         }
-        
+
         if (process.env["IGOT_PUSH_KEY" + UseGroupNotify] && Use_iGotNotify) {
             IGOT_PUSH_KEY = process.env["IGOT_PUSH_KEY" + UseGroupNotify];
         }
@@ -855,7 +855,7 @@ async function sendNotify(text, desp, params = {}, author = `\n\n本通知 By xm
 
     //提供6种通知
     desp = buildLastDesp(desp, author);
-        await serverNotify(text, desp); //微信server酱
+    await serverNotify(text, desp); //微信server酱
 
     if (PUSH_PLUS_TOKEN) {
         console.log("PUSH_PLUS TOKEN :" + PUSH_PLUS_TOKEN);
@@ -953,7 +953,7 @@ function getQLinfo(strCK, intcreated, strTimestamp, strRemark) {
                 }
             }
         }
-        
+
         //过期时间
         var UseDay = Math.ceil((DateToday.getTime() - DateCreated.getTime()) / 86400000);
         var LogoutDay = 3 - Math.ceil((DateToday.getTime() - DateTimestamp.getTime()) / 86400000);
@@ -1051,7 +1051,7 @@ async function sendNotifybyWxPucher(text, desp, PtPin, author = `\n\n本通知 B
                                     Tempinfo = getQLinfo(cookie, tempEnv.createdAt, tempEnv.updatedAt, tempEnv.remarks);
                                 else
                                     Tempinfo = getQLinfo(cookie, tempEnv.createdAt, tempEnv.timestamp, tempEnv.remarks);
-                            
+
                             if (Tempinfo) {
                                 Tempinfo = $.nickName + Tempinfo;
                                 desp = desp.replace(new RegExp(`${$.UserName}|${$.nickName}`, 'gm'), Tempinfo);
@@ -1082,7 +1082,7 @@ async function sendNotifybyWxPucher(text, desp, PtPin, author = `\n\n本通知 B
                         }
                     }
 
-                                        console.log("处理完成，开始发送通知...");
+                    console.log("处理完成，开始发送通知...");
                     desp = buildLastDesp(desp, author);
                     if (strAllNotify) {
                         desp = strAllNotify + "\n" + desp;
@@ -1642,32 +1642,32 @@ function qywxamNotify(text, desp, strsummary = "") {
                 let options;
 
                 switch (QYWX_AM_AY[4]) {
-                case '0':
-                    options = {
-                        msgtype: 'textcard',
-                        textcard: {
-                            title: `${text}`,
-                            description: `${strsummary}`,
-                            url: 'https://github.com/whyour/qinglong',
-                            btntxt: '更多',
-                        },
-                    };
-                    break;
+                    case '0':
+                        options = {
+                            msgtype: 'textcard',
+                            textcard: {
+                                title: `${text}`,
+                                description: `${strsummary}`,
+                                url: 'https://github.com/whyour/qinglong',
+                                btntxt: '更多',
+                            },
+                        };
+                        break;
 
-                case '1':
-                    options = {
-                        msgtype: 'text',
-                        text: {
-                            content: `${text}\n\n${desp}`,
-                        },
-                    };
-                    break;
+                    case '1':
+                        options = {
+                            msgtype: 'text',
+                            text: {
+                                content: `${text}\n\n${desp}`,
+                            },
+                        };
+                        break;
 
-                default:
-                    options = {
-                        msgtype: 'mpnews',
-                        mpnews: {
-                            articles: [{
+                    default:
+                        options = {
+                            msgtype: 'mpnews',
+                            mpnews: {
+                                articles: [{
                                     title: `${text}`,
                                     thumb_media_id: `${QYWX_AM_AY[4]}`,
                                     author: `智能助手`,
@@ -1675,8 +1675,8 @@ function qywxamNotify(text, desp, strsummary = "") {
                                     content: `${html}`,
                                     digest: `${strsummary}`,
                                 },],
-                        },
-                    };
+                            },
+                        };
                 }
                 if (!QYWX_AM_AY[4]) {
                     //如不提供第四个参数,则默认进行文本消息类型推送
@@ -1970,47 +1970,47 @@ function wxpusherNotify(text, desp) {
 }
 
 function PushDeerNotify(text, desp) {
-  return new Promise((resolve) => {
-    if (PUSHDEER_KEY) {
-      desp = encodeURI(desp);
-      desp = desp.replace(/%0A/g, '%0A%0A');
-      const options = {
-        url: `https://api2.pushdeer.com/message/push`,
-        body: `pushkey=${PUSHDEER_KEY}&text=${text}&desp=${desp}&type="markdown"`,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        timeout: 5000,
-      };
-      $.post(options, (err, resp, data) => {
-        try {
-          if (err) {
-            console.log('发送通知调用API失败！！\n');
-            console.log(err);
-          } else {
-            data = JSON.parse(data);
-            // 通过返回的result的长度来判断是否成功
-            if (
-              data.content.result.length !== undefined &&
-              data.content.result.length > 0
-            ) {
-              console.log('PushDeer发送通知消息成功🎉\n');
-            } else {
-              console.log(
-                `PushDeer发送通知消息异常\n${JSON.stringify(data)}`,
-              );
-            }
-          }
-        } catch (e) {
-          $.logErr(e, resp);
-        } finally {
-          resolve(data);
+    return new Promise((resolve) => {
+        if (PUSHDEER_KEY) {
+            desp = encodeURI(desp);
+            desp = desp.replace(/%0A/g, '%0A%0A');
+            const options = {
+                url: `https://api2.pushdeer.com/message/push`,
+                body: `pushkey=${PUSHDEER_KEY}&text=${text}&desp=${desp}&type="markdown"`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                timeout: 5000,
+            };
+            $.post(options, (err, resp, data) => {
+                try {
+                    if (err) {
+                        console.log('发送通知调用API失败！！\n');
+                        console.log(err);
+                    } else {
+                        data = JSON.parse(data);
+                        // 通过返回的result的长度来判断是否成功
+                        if (
+                            data.content.result.length !== undefined &&
+                            data.content.result.length > 0
+                        ) {
+                            console.log('PushDeer发送通知消息成功🎉\n');
+                        } else {
+                            console.log(
+                                `PushDeer发送通知消息异常\n${JSON.stringify(data)}`,
+                            );
+                        }
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve(data);
+                }
+            });
+        } else {
+            resolve();
         }
-      });
-    } else {
-      resolve();
-    }
-  });
+    });
 }
 
 function GetDateTime(date) {
@@ -2114,7 +2114,7 @@ function GetnickName2() {
                         if (data['retcode'] === 13) {
                             $.isLogin = false; //cookie过期
                             return
-                        }                        
+                        }
                         if (data['retcode'] === 0) {
                             $.nickName = (data['base'] && data['base'].nickname) || "";
                         }
@@ -2135,138 +2135,138 @@ const gotModule = require('got');
 const got = gotModule.default || gotModule;
 require('dotenv').config();
 let exists = fs.existsSync('/ql/data/config/auth.json');
-let authFile="";
-if (exists) 
-    authFile="/ql/data/config/auth.json"
+let authFile = "";
+if (exists)
+    authFile = "/ql/data/config/auth.json"
 else
-    authFile="/ql/config/auth.json"
+    authFile = "/ql/config/auth.json"
 
 const api = got.extend({
-  prefixUrl: 'http://127.0.0.1:5600',
-  retry: { limit: 0 },
+    prefixUrl: 'http://127.0.0.1:5600',
+    retry: { limit: 0 },
 });
 
 async function getToken() {
-  const authConfig = JSON.parse(fs.readFileSync(authFile));
-  return authConfig.token;
+    const authConfig = JSON.parse(fs.readFileSync(authFile));
+    return authConfig.token;
 }
 
-async function getEnvs(){  
-  const token = await getToken();
-  const body = await api({
-    url: 'api/envs',
-    searchParams: {
-      searchValue: 'JD_COOKIE',
-      t: Date.now(),
-    },
-    headers: {
-      Accept: 'application/json',
-      authorization: `Bearer ${token}`,
-    },
-  }).json();
-  return body.data;
+async function getEnvs() {
+    const token = await getToken();
+    const body = await api({
+        url: 'api/envs',
+        searchParams: {
+            searchValue: 'JD_COOKIE',
+            t: Date.now(),
+        },
+        headers: {
+            Accept: 'application/json',
+            authorization: `Bearer ${token}`,
+        },
+    }).json();
+    return body.data;
 };
 
-async function getEnvsCount(){
-  const data = await getEnvs();
-  return data.length;
+async function getEnvsCount() {
+    const data = await getEnvs();
+    return data.length;
 };
 
-async function addEnv(cookie, remarks){
-  const token = await getToken();
-  const body = await api({
-    method: 'post',
-    url: 'api/envs',
-    params: { t: Date.now() },
-    json: [{
-      name: 'JD_COOKIE',
-      value: cookie,
-      remarks,
-    }],
-    headers: {
-      Accept: 'application/json',
-      authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
-  }).json();
-  return body;
+async function addEnv(cookie, remarks) {
+    const token = await getToken();
+    const body = await api({
+        method: 'post',
+        url: 'api/envs',
+        params: { t: Date.now() },
+        json: [{
+            name: 'JD_COOKIE',
+            value: cookie,
+            remarks,
+        }],
+        headers: {
+            Accept: 'application/json',
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json;charset=UTF-8',
+        },
+    }).json();
+    return body;
 }
 
-async function updateEnv(cookie, eid, remarks){
-  const token = await getToken();
-  const body = await api({
-    method: 'put',
-    url: 'api/envs',
-    params: { t: Date.now() },
-    json: {
-      name: 'JD_COOKIE',
-      value: cookie,
-      _id: eid,
-      remarks,
-    },
-    headers: {
-      Accept: 'application/json',
-      authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
-  }).json();
-  return body;
+async function updateEnv(cookie, eid, remarks) {
+    const token = await getToken();
+    const body = await api({
+        method: 'put',
+        url: 'api/envs',
+        params: { t: Date.now() },
+        json: {
+            name: 'JD_COOKIE',
+            value: cookie,
+            _id: eid,
+            remarks,
+        },
+        headers: {
+            Accept: 'application/json',
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json;charset=UTF-8',
+        },
+    }).json();
+    return body;
 };
 
-async function updateEnv11(cookie, eid, remarks){
-  const token = await getToken();
-  const body = await api({
-    method: 'put',
-    url: 'api/envs',
-    params: { t: Date.now() },
-    json: {
-      name: 'JD_COOKIE',
-      value: cookie,
-      id: eid,
-      remarks,
-    },
-    headers: {
-      Accept: 'application/json',
-      authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
-  }).json();
-  return body;
+async function updateEnv11(cookie, eid, remarks) {
+    const token = await getToken();
+    const body = await api({
+        method: 'put',
+        url: 'api/envs',
+        params: { t: Date.now() },
+        json: {
+            name: 'JD_COOKIE',
+            value: cookie,
+            id: eid,
+            remarks,
+        },
+        headers: {
+            Accept: 'application/json',
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json;charset=UTF-8',
+        },
+    }).json();
+    return body;
 };
 
-async function DisableCk(eid){
-  const token = await getToken();
-  const body = await api({
-    method: 'put',
-    url: 'api/envs/disable',
-    params: { t: Date.now() },    
-    body: JSON.stringify([eid]),
-    headers: {
-      Accept: 'application/json',
-      authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
-  }).json();
-  return body;
+async function DisableCk(eid) {
+    const token = await getToken();
+    const body = await api({
+        method: 'put',
+        url: 'api/envs/disable',
+        params: { t: Date.now() },
+        body: JSON.stringify([eid]),
+        headers: {
+            Accept: 'application/json',
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json;charset=UTF-8',
+        },
+    }).json();
+    return body;
 };
 
-async function EnableCk(eid){
-  const token = await getToken();
-  const body = await api({
-    method: 'put',
-    url: 'api/envs/enable',
-    params: { t: Date.now() },    
-    body: JSON.stringify([eid]),
-    headers: {
-      Accept: 'application/json',
-      authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
-  }).json();
-  return body;
+async function EnableCk(eid) {
+    const token = await getToken();
+    const body = await api({
+        method: 'put',
+        url: 'api/envs/enable',
+        params: { t: Date.now() },
+        body: JSON.stringify([eid]),
+        headers: {
+            Accept: 'application/json',
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json;charset=UTF-8',
+        },
+    }).json();
+    return body;
 };
 
-async function getstatus(eid){
+async function getstatus(eid) {
     const envs = await getEnvs();
     var tempid = 0;
     for (let i = 0; i < envs.length; i++) {
@@ -2284,7 +2284,7 @@ async function getstatus(eid){
     return 99;
 };
 
-async function getEnvById(eid){
+async function getEnvById(eid) {
     const envs = await getEnvs();
     var tempid = 0;
     for (let i = 0; i < envs.length; i++) {
@@ -2302,31 +2302,31 @@ async function getEnvById(eid){
     return "";
 };
 
-async function getEnvByPtPin(Ptpin){
-  const envs = await getEnvs();
-  for (let i = 0; i < envs.length; i++) {    
-    var tempptpin = decodeURIComponent(envs[i].value.match(/pt_pin=([^; ]+)(?=;?)/) && envs[i].value.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-    if(tempptpin==Ptpin){         
-         return envs[i]; 
-      }
-  }  
-  return "";
+async function getEnvByPtPin(Ptpin) {
+    const envs = await getEnvs();
+    for (let i = 0; i < envs.length; i++) {
+        var tempptpin = decodeURIComponent(envs[i].value.match(/pt_pin=([^; ]+)(?=;?)/) && envs[i].value.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+        if (tempptpin == Ptpin) {
+            return envs[i];
+        }
+    }
+    return "";
 };
 
-async function delEnv(eid){
-  const token = await getToken();
-  const body = await api({
-    method: 'delete',
-    url: 'api/envs',
-    params: { t: Date.now() },
-    body: JSON.stringify([eid]),
-    headers: {
-      Accept: 'application/json',
-      authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
-  }).json();
-  return body;
+async function delEnv(eid) {
+    const token = await getToken();
+    const body = await api({
+        method: 'delete',
+        url: 'api/envs',
+        params: { t: Date.now() },
+        body: JSON.stringify([eid]),
+        headers: {
+            Accept: 'application/json',
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json;charset=UTF-8',
+        },
+    }).json();
+    return body;
 };
 module.exports = {
     sendNotify,
@@ -2339,13 +2339,13 @@ function Env(t, s) {
     return new (class {
         constructor(t, s) {
             (this.name = t),
-            (this.data = null),
-            (this.dataFile = 'box.dat'),
-            (this.logs = []),
-            (this.logSeparator = '\n'),
-            (this.startTime = new Date().getTime()),
-            Object.assign(this, s),
-            this.log('', `\ud83d\udd14${this.name}, \u5f00\u59cb!`);
+                (this.data = null),
+                (this.dataFile = 'box.dat'),
+                (this.logs = []),
+                (this.logSeparator = '\n'),
+                (this.startTime = new Date().getTime()),
+                Object.assign(this, s),
+                this.log('', `\ud83d\udd14${this.name}, \u5f00\u59cb!`);
         }
         isNode() {
             return 'undefined' != typeof module && !!module.exports;
@@ -2372,20 +2372,20 @@ function Env(t, s) {
                 i = i ? i.replace(/\n/g, '').trim() : i;
                 let o = this.getdata('@chavy_boxjs_userCfgs.httpapi_timeout');
                 (o = o ? 1 * o : 20),
-                (o = s && s.timeout ? s.timeout : o);
+                    (o = s && s.timeout ? s.timeout : o);
                 const [h, a] = i.split('@'),
-                r = {
-                    url: `http://${a}/v1/scripting/evaluate`,
-                    body: {
-                        script_text: t,
-                        mock_type: 'cron',
-                        timeout: o
-                    },
-                    headers: {
-                        'X-Key': h,
-                        Accept: '*/*'
-                    },
-                };
+                    r = {
+                        url: `http://${a}/v1/scripting/evaluate`,
+                        body: {
+                            script_text: t,
+                            mock_type: 'cron',
+                            timeout: o
+                        },
+                        headers: {
+                            'X-Key': h,
+                            Accept: '*/*'
+                        },
+                    };
                 $.post(r, (t, s, i) => e(i));
             }).catch((t) => this.logErr(t));
         }
@@ -2393,11 +2393,11 @@ function Env(t, s) {
             if (!this.isNode())
                 return {}; {
                 (this.fs = this.fs ? this.fs : require('fs')),
-                (this.path = this.path ? this.path : require('path'));
+                    (this.path = this.path ? this.path : require('path'));
                 const t = this.path.resolve(this.dataFile),
-                s = this.path.resolve(process.cwd(), this.dataFile),
-                e = this.fs.existsSync(t),
-                i = !e && this.fs.existsSync(s);
+                    s = this.path.resolve(process.cwd(), this.dataFile),
+                    e = this.fs.existsSync(t),
+                    i = !e && this.fs.existsSync(s);
                 if (!e && !i)
                     return {}; {
                     const i = e ? t : s;
@@ -2412,12 +2412,12 @@ function Env(t, s) {
         writedata() {
             if (this.isNode()) {
                 (this.fs = this.fs ? this.fs : require('fs')),
-                (this.path = this.path ? this.path : require('path'));
+                    (this.path = this.path ? this.path : require('path'));
                 const t = this.path.resolve(this.dataFile),
-                s = this.path.resolve(process.cwd(), this.dataFile),
-                e = this.fs.existsSync(t),
-                i = !e && this.fs.existsSync(s),
-                o = JSON.stringify(this.data);
+                    s = this.path.resolve(process.cwd(), this.dataFile),
+                    e = this.fs.existsSync(t),
+                    i = !e && this.fs.existsSync(s),
+                    o = JSON.stringify(this.data);
                 e ? this.fs.writeFileSync(t, o) : i ? this.fs.writeFileSync(s, o) : this.fs.writeFileSync(t, o);
             }
         }
@@ -2436,7 +2436,7 @@ function Env(t, s) {
             let s = this.getval(t);
             if (/^@/.test(t)) {
                 const [, e, i] = /^@(.*?)\.(.*?)$/.exec(t),
-                o = e ? this.getval(e) : '';
+                    o = e ? this.getval(e) : '';
                 if (o)
                     try {
                         const t = JSON.parse(o);
@@ -2451,16 +2451,16 @@ function Env(t, s) {
             let e = !1;
             if (/^@/.test(s)) {
                 const [, i, o] = /^@(.*?)\.(.*?)$/.exec(s),
-                h = this.getval(i),
-                a = i ? ('null' === h ? null : h || '{}') : '{}';
+                    h = this.getval(i),
+                    a = i ? ('null' === h ? null : h || '{}') : '{}';
                 try {
                     const s = JSON.parse(a);
                     this.lodash_set(s, o, t),
-                    (e = this.setval(JSON.stringify(s), i));
+                        (e = this.setval(JSON.stringify(s), i));
                 } catch (s) {
                     const h = {};
                     this.lodash_set(h, o, t),
-                    (e = this.setval(JSON.stringify(h), i));
+                        (e = this.setval(JSON.stringify(h), i));
                 }
             } else
                 e = $.setval(t, s);
@@ -2474,33 +2474,33 @@ function Env(t, s) {
         }
         initGotEnv(t) {
             (this.got = this.got ? this.got : require('got')),
-            (this.cktough = this.cktough ? this.cktough : require('tough-cookie')),
-            (this.ckjar = this.ckjar ? this.ckjar : new this.cktough.CookieJar()),
-            t && ((t.headers = t.headers ? t.headers : {}), void 0 === t.headers.Cookie && void 0 === t.cookieJar && (t.cookieJar = this.ckjar));
+                (this.cktough = this.cktough ? this.cktough : require('tough-cookie')),
+                (this.ckjar = this.ckjar ? this.ckjar : new this.cktough.CookieJar()),
+                t && ((t.headers = t.headers ? t.headers : {}), void 0 === t.headers.Cookie && void 0 === t.cookieJar && (t.cookieJar = this.ckjar));
         }
         get(t, s = () => { }) {
             t.headers && (delete t.headers['Content-Type'], delete t.headers['Content-Length']),
-            this.isSurge() || this.isLoon() ? $httpClient.get(t, (t, e, i) => {
-                !t && e && ((e.body = i), (e.statusCode = e.status)),
-                s(t, e, i);
-            }) : this.isQuanX() ? $task.fetch(t).then((t) => {
-                const {
-                    statusCode: e,
-                    statusCode: i,
-                    headers: o,
-                    body: h
-                } = t;
-                s(null, {
-                    status: e,
-                    statusCode: i,
-                    headers: o,
-                    body: h
-                }, h);
-            }, (t) => s(t)) : this.isNode() && (this.initGotEnv(t), this.got(t).on('redirect', (t, s) => {
+                this.isSurge() || this.isLoon() ? $httpClient.get(t, (t, e, i) => {
+                    !t && e && ((e.body = i), (e.statusCode = e.status)),
+                        s(t, e, i);
+                }) : this.isQuanX() ? $task.fetch(t).then((t) => {
+                    const {
+                        statusCode: e,
+                        statusCode: i,
+                        headers: o,
+                        body: h
+                    } = t;
+                    s(null, {
+                        status: e,
+                        statusCode: i,
+                        headers: o,
+                        body: h
+                    }, h);
+                }, (t) => s(t)) : this.isNode() && (this.initGotEnv(t), this.got(t).on('redirect', (t, s) => {
                     try {
                         const e = t.headers['set-cookie'].map(this.cktough.Cookie.parse).toString();
                         this.ckjar.setCookieSync(e, null),
-                        (s.cookieJar = this.ckjar);
+                            (s.cookieJar = this.ckjar);
                     } catch (t) {
                         this.logErr(t);
                     }
@@ -2523,7 +2523,7 @@ function Env(t, s) {
             if ((t.body && t.headers && !t.headers['Content-Type'] && (t.headers['Content-Type'] = 'application/x-www-form-urlencoded'), delete t.headers['Content-Length'], this.isSurge() || this.isLoon()))
                 $httpClient.post(t, (t, e, i) => {
                     !t && e && ((e.body = i), (e.statusCode = e.status)),
-                    s(t, e, i);
+                        s(t, e, i);
                 });
             else if (this.isQuanX())
                 (t.method = 'POST'), $task.fetch(t).then((t) => {
@@ -2581,12 +2581,12 @@ function Env(t, s) {
             const h = (t) => !t || (!this.isLoon() && this.isSurge()) ? t : 'string' == typeof t ? this.isLoon() ? t : this.isQuanX() ? {
                 'open-url': t
             }
-             : void 0 : 'object' == typeof t && (t['open-url'] || t['media-url']) ? this.isLoon() ? t['open-url'] : this.isQuanX() ? t : void 0 : void 0;
+                : void 0 : 'object' == typeof t && (t['open-url'] || t['media-url']) ? this.isLoon() ? t['open-url'] : this.isQuanX() ? t : void 0 : void 0;
             $.isMute || (this.isSurge() || this.isLoon() ? $notification.post(s, e, i, h(o)) : this.isQuanX() && $notify(s, e, i, h(o))),
-            this.logs.push('', '==============\ud83d\udce3\u7cfb\u7edf\u901a\u77e5\ud83d\udce3=============='),
-            this.logs.push(s),
-            e && this.logs.push(e),
-            i && this.logs.push(i);
+                this.logs.push('', '==============\ud83d\udce3\u7cfb\u7edf\u901a\u77e5\ud83d\udce3=============='),
+                this.logs.push(s),
+                e && this.logs.push(e),
+                i && this.logs.push(i);
         }
         log(...t) {
             t.length > 0 ? (this.logs = [...this.logs, ...t]) : console.log(this.logs.join(this.logSeparator));
@@ -2600,10 +2600,10 @@ function Env(t, s) {
         }
         done(t = {}) {
             const s = new Date().getTime(),
-            e = (s - this.startTime) / 1e3;
+                e = (s - this.startTime) / 1e3;
             this.log('', `\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`),
-            this.log(),
-            (this.isSurge() || this.isQuanX() || this.isLoon()) && $done(t);
+                this.log(),
+                (this.isSurge() || this.isQuanX() || this.isLoon()) && $done(t);
         }
     })(t, s);
 }
