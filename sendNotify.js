@@ -2131,7 +2131,8 @@ function GetnickName2() {
         });
     });
 }
-const got = require('got');
+const gotModule = require('got');
+const got = gotModule.default || gotModule;
 require('dotenv').config();
 let exists = fs.existsSync('/ql/data/config/auth.json');
 let authFile="";
